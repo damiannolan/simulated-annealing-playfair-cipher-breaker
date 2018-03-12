@@ -2,7 +2,7 @@ package ie.gmit.sw.ai;
 
 import ie.gmit.sw.ai.cipher.IKeyGenerator;
 import ie.gmit.sw.ai.cipher.KeyGenerator;
-import ie.gmit.sw.ai.cipher.Playfair;
+import ie.gmit.sw.ai.cipher.PlayfairCipher;
 
 public class CipherBreaker 
 {
@@ -12,7 +12,6 @@ public class CipherBreaker
     {
     	String message = "Hello World";
     	String encMessage = "GCIZHQCWTIBZ";
-        System.out.println(message);
         
         IKeyGenerator keygen = new KeyGenerator();
         String key = keygen.generateKey();
@@ -23,7 +22,7 @@ public class CipherBreaker
         System.out.println(key);
         System.out.println(key.length());
         
-        Playfair playfair = new Playfair(key);
+        PlayfairCipher playfair = new PlayfairCipher(key);
         String[] digrams = playfair.createDigrams(message);
         
         for(int i = 0; i < digrams.length; i++) {

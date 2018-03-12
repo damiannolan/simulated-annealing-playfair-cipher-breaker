@@ -1,20 +1,12 @@
 package ie.gmit.sw.ai.cipher;
 
-public class Playfair {
-	private String key;
+public class PlayfairCipher extends AbstractCipher {
 	private Digramator digramator;
 	
-	public Playfair(String key) {
-		this.key = key;
+	public PlayfairCipher(String key) {
+		super();
+		super.setKey(key);
 		this.digramator = new Digramator();
-	}
-	
-	public String getKey() {
-		return this.key;
-	}
-	
-	public void setKey(String key) {
-		this.key = key;
 	}
 	
 	public String[] createDigrams(String text) {
@@ -50,5 +42,11 @@ public class Playfair {
 		}
 		
 		return plainText.toString();
+	}
+
+	@Override
+	public String encrypt(String[] digrams, String key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
