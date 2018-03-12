@@ -31,13 +31,8 @@ public class CipherBreaker
         }
         
        digrams = playfair.createDigrams(encMessage.toUpperCase());
-       //String plaintext = playfair.DecryptCipherText(digrams, playfair.getKey());
-       //System.out.println(plaintext);
-        
-//        Shinglizer shinglizer = new Shinglizer();
-//        String[] digrams = shinglizer.createNGrams(message, 2);
-//        
-//        for(String s : digrams)
-//        	System.out.println(s);
+       String plaintext = playfair.decrypt(digrams, playfair.getKey());
+       System.out.println(plaintext);
+
     }
 }
