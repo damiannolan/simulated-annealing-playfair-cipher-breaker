@@ -17,7 +17,7 @@ public class KeyGenerator implements IKeyGenerator {
 	public String generateKey(String alphabet) {
 		List<Character> sequence = new ArrayList<Character>();
 		
-		for(char ch : alphabet.toLowerCase().toCharArray()) {
+		for(char ch : alphabet.toUpperCase().toCharArray()) {
 			sequence.add(ch);
 		}
 		
