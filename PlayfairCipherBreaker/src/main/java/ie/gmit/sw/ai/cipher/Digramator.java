@@ -19,7 +19,10 @@ public class Digramator implements IDigramator {
 	}
 	
 	private String primeText(String text) {
-		StringBuilder builder = new StringBuilder(text.toUpperCase().replace(" ", ""));
+		// Regex \W replaces anything that isn't a word character (including punctuation)
+		text = text.replaceAll("\\W", "");
+		
+		StringBuilder builder = new StringBuilder(text.toUpperCase());
 		
 		for(int i = 0; i < text.length() - 1; i += 2) {
 			if(builder.charAt(i) == builder.charAt(i + 1)) {
