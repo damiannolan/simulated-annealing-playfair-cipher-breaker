@@ -1,4 +1,4 @@
-package ie.gmit.sw.keygen;
+package ie.gmit.sw.ai.keygen;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package ie.gmit.sw.ai;
 
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
-import ie.gmit.sw.keygen.IKeyGenerator;
-import ie.gmit.sw.keygen.KeyGenerator;
+import ie.gmit.sw.ai.keygen.IKeyGenerator;
+import ie.gmit.sw.ai.keygen.KeyGenerator;
 
 public class CipherBreaker {
 	
