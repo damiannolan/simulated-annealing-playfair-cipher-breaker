@@ -3,7 +3,7 @@ package ie.gmit.sw.ai;
 import ie.gmit.sw.ai.cipher.IKeyGenerator;
 import ie.gmit.sw.ai.cipher.KeyGenerator;
 
-public class App 
+public class CipherBreaker 
 {
 	static final String PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 	
