@@ -12,7 +12,11 @@ public class CipherBreaker
         System.out.println("Hello World!");
         
         IKeyGenerator keygen = new KeyGenerator();
-        String key = keygen.generateKey(PLAYFAIR_ALPHABET);
+        String key = keygen.generateKey();
+        System.out.println(key);
+        System.out.println(key.length());
+        
+        key = keygen.createKey("secretkey");
         System.out.println(key);
         System.out.println(key.length());
     }
