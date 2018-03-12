@@ -5,12 +5,14 @@ import ie.gmit.sw.ai.cipher.KeyGenerator;
 
 public class App 
 {
+	static final String PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+	
     public static void main( String[] args )
     {
         System.out.println("Hello World!");
         
         IKeyGenerator keygen = new KeyGenerator();
-        String key = keygen.generateKey("ABCDEFGHIKLMNOPQRSTUVWXYZ");
+        String key = keygen.generateKey(PLAYFAIR_ALPHABET);
         System.out.println(key);
         System.out.println(key.length());
     }
