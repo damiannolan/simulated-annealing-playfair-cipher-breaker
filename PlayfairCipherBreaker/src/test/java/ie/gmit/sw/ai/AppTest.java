@@ -1,4 +1,4 @@
-package ie.gmit.sw.ai.PlayfairCipherBreaker;
+package ie.gmit.sw.ai;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

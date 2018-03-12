@@ -1,4 +1,4 @@
-package ie.gmit.sw.ai.PlayfairCipherBreaker;
+package ie.gmit.sw.ai;
 
 public class App 
 {
