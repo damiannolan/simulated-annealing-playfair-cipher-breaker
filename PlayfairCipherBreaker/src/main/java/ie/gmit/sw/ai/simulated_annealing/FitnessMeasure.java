@@ -9,10 +9,12 @@ import java.util.Map;
 public class FitnessMeasure {
 	private static final String TEXTFILE = "4grams.txt"; 
 	private Map<String, Integer> dictionary;
+	private long totalQuadgrams;
 	
 	public FitnessMeasure() {
 		try {
 			this.dictionary = parseText(TEXTFILE);
+			this.totalQuadgrams = dictionary.values().stream().mapToLong(i->i).sum();
 		} catch (Exception e) {
 			System.out.println("Error occurred while parsing text" + TEXTFILE);
 			e.printStackTrace();
@@ -36,7 +38,16 @@ public class FitnessMeasure {
 		return quadgrams;
 	}
 	
-	public void test() {
-		System.out.println(dictionary.get("NTHE"));
+	public double logProbability(String key) {
+		
+		return Math.log((double)(dictionary.get(key.toUpperCase()) / dictionary.size()));
+	}
+	
+	public int getCount(String key) {
+		return this.dictionary.get(key.toUpperCase());
+	}
+
+	public long getTotalQuadgrams() {
+		return totalQuadgrams;
 	}
 }

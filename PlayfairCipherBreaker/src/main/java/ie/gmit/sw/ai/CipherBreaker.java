@@ -8,9 +8,12 @@ import ie.gmit.sw.ai.simulated_annealing.FitnessMeasure;
 public class CipherBreaker {
 	
     public static void main( String[] args ) {
-    	
+    	long time = System.currentTimeMillis();
     	FitnessMeasure fm = new FitnessMeasure();
-    	fm.test();
+    	System.out.println("Total quadgrams: " + fm.getTotalQuadgrams());
+    	System.out.println(fm.getCount("happ"));
+    	System.out.println(fm.logProbability("HAPP"));
+    	
     	
         IKeyGenerator keygen = new KeyGenerator();
         String key = keygen.generateKey();
@@ -31,5 +34,9 @@ public class CipherBreaker {
         digrams = playfair.createDigrams(encrypted);
         String decrypted = playfair.decrypt(digrams, playfair.getKey());
         System.out.println("Decrypted: " + decrypted);
+        
+        
+        long end = System.currentTimeMillis() - time;
+        System.out.println(end + "ms");
     }
 }
