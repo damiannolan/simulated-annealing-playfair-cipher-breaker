@@ -26,7 +26,7 @@ public class Digramator implements IDigramator {
 		
 		for(int i = 0; i < text.length() - 1; i += 2) {
 			if(builder.charAt(i) == builder.charAt(i + 1)) {
-				builder.insert(i + 1, "X");
+				builder.replace((i + 1), (i + 2), "X");
 			}
 		}
 		

@@ -3,22 +3,28 @@ package ie.gmit.sw.ai;
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.keygen.IKeyGenerator;
 import ie.gmit.sw.ai.keygen.KeyGenerator;
+import ie.gmit.sw.ai.simulated_annealing.FitnessMeasure;
 
 public class CipherBreaker {
 	
     public static void main( String[] args ) {
+    	
+    	FitnessMeasure fm = new FitnessMeasure();
+    	fm.test();
+    	
         IKeyGenerator keygen = new KeyGenerator();
         String key = keygen.generateKey();
         System.out.println(key);
         System.out.println(key.length());
         
-        key = keygen.createKey("secretkey");
+        key = keygen.createKey("THEQUICKBROWNFXMPDVLAZYGS");
         System.out.println(key);
         System.out.println(key.length());
         
         PlayfairCipher playfair = new PlayfairCipher(key);
         
-        String[] digrams = playfair.createDigrams("Hello World, my guys!");
+        String[] digrams = playfair.createDigrams("Hello World, my hell");
+        //String[] digrams = playfair.createDigrams("HEQEFIRCHITZMHUKOTXEDKWLHKHQVDSIEAKOZTXMTKOEEQSBXTDYHEUKUDBMKYZTFIRCEOMIYOZAEAMKIUZNQHTWDUOBVUDUPNOIEHEQKDLYWXNWILAZDYYOFTWAGADTVUDXXIEKITLKGKSIUYYOYETWDUOCHEFWHEKOABOKHUIMAREMWNFWFWIUNTTIOIOZAZTWFBRCHEXMTYDYHETIDTYOZRMAXWIUOITZMYDHBXHKUMSKXTDYMNXIMRNKZMXIHEXMHDTOOEKYSBQUKDOCHEZATCDEEKVUMXFCISGUYRFWRCOEEQUNZIIAKMVMQHEQMN");
         String encrypted = playfair.encrypt(digrams, playfair.getKey());
         System.out.println("Encrypted: " + encrypted);
         
