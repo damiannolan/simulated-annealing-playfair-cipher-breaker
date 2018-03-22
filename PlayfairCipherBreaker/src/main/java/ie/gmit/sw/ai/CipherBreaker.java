@@ -11,7 +11,6 @@ public class CipherBreaker {
     	long time = System.currentTimeMillis();
     	FitnessMeasure fm = new FitnessMeasure();
     	System.out.println("Total quadgrams: " + fm.getTotalQuadgrams());
-    	System.out.println(fm.getCount("happ"));
     	System.out.println(fm.logProbability("HAPP"));
     	
     	
