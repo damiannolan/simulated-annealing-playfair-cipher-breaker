@@ -13,7 +13,6 @@ public class CipherBreaker {
     	System.out.println("Total quadgrams: " + fm.getTotalQuadgrams());
     	System.out.println(fm.logProbability("HAPP"));
     	
-    	
         IKeyGenerator keygen = new KeyGenerator();
         String key = keygen.generateKey();
         System.out.println(key);
@@ -33,7 +32,6 @@ public class CipherBreaker {
         digrams = playfair.createDigrams(encrypted);
         String decrypted = playfair.decrypt(digrams, playfair.getKey());
         System.out.println("Decrypted: " + decrypted);
-        
         
         long end = System.currentTimeMillis() - time;
         System.out.println(end + "ms");
