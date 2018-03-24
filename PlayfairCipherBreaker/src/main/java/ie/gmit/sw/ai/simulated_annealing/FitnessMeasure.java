@@ -39,16 +39,15 @@ public class FitnessMeasure {
 		return dictionary.values().stream().mapToLong(i->i).sum();
 	}
 	
-	private double nGramProbability(String key) {
-//		double temp = (double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams;
-//		return Math.log10(temp);
-		
+	private double nGramProbability(String key) {		
 		return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
 	}
 	
-	public double logProbability(String cipherText) {					
-		return IntStream.range(0, (cipherText.length() - 4 + 1))
-				.mapToObj(i -> new String(cipherText.toCharArray(), i, 4))
+	public double logProbability(String textString) {
+		String text = textString.replace(" ",  "");
+		
+		return IntStream.range(0, (text.length() - 4 + 1))
+				.mapToObj(i -> new String(text.toCharArray(), i, 4))
 				.mapToDouble(ngram -> nGramProbability(ngram)).sum();
 	}
 	
