@@ -1,13 +1,11 @@
 package ie.gmit.sw.ai.simulated_annealing;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class FitnessMeasure {
@@ -18,30 +16,14 @@ public class FitnessMeasure {
 	public FitnessMeasure() {
 		try {
 			this.dictionary = parse(TEXTFILE);
-			this.totalQuadgrams = dictionary.values().stream().mapToLong(i->i).sum();
+			this.totalQuadgrams = getTotalQuadgrams();
 		} catch (Exception e) {
 			System.out.println("Error occurred while parsing text" + TEXTFILE);
 			e.printStackTrace();
 		}	
 	}
 	
-	public HashMap<String, Integer> parseText(String textfile) throws IOException {
-		HashMap<String, Integer> quadgrams = new HashMap<String, Integer>();
-		
-		BufferedReader reader = new BufferedReader(new FileReader(textfile));
-		String next = reader.readLine();
-		
-		while(next != null) {
-			quadgrams.put(next.split(" ")[0], Integer.parseInt(next.split(" ")[1]));
-			
-			next = reader.readLine();
-		}
-		
-		reader.close();
-		return quadgrams;
-	}
-	
-	public Map<String, Integer> parse(String fileName) throws IOException {		
+	private Map<String, Integer> parse(String fileName) throws IOException {		
 		Stream<String> lines = Files.lines(Paths.get(fileName));
 		
 		Map<String, Integer> quadgrams = 
@@ -53,16 +35,25 @@ public class FitnessMeasure {
 		return quadgrams;
 	}
 	
-	public double logProbability(String key) {
-		double temp = (double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams;
-		return Math.log10(temp);
+	private long getTotalQuadgrams() {
+		return dictionary.values().stream().mapToLong(i->i).sum();
 	}
 	
-	public int getCount(String key) {
+	private double nGramProbability(String key) {
+//		double temp = (double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams;
+//		return Math.log10(temp);
+		
+		return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
+	}
+	
+	public double logProbability(String cipherText) {					
+		return IntStream.range(0, (cipherText.length() - 4 + 1))
+				.mapToObj(i -> new String(cipherText.toCharArray(), i, 4))
+				.mapToDouble(ngram -> nGramProbability(ngram)).sum();
+	}
+	
+	public int getNGramFrequencyCount(String key) {
 		return this.dictionary.get(key.toUpperCase());
 	}
-
-	public long getTotalQuadgrams() {
-		return totalQuadgrams;
-	}
+	
 }

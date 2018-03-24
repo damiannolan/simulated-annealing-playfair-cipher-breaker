@@ -10,7 +10,8 @@ public class CipherBreaker {
     public static void main( String[] args ) {
     	long time = System.currentTimeMillis();
     	FitnessMeasure fm = new FitnessMeasure();
-    	System.out.println("Total quadgrams: " + fm.getTotalQuadgrams());
+    	
+    	// System.out.println("Total quadgrams: " + fm.getTotalQuadgrams());
     	System.out.println(fm.logProbability("HAPP"));
     	
         IKeyGenerator keygen = new KeyGenerator();
