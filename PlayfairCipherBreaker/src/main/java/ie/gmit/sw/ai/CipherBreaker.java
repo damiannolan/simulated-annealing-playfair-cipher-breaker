@@ -3,14 +3,14 @@ package ie.gmit.sw.ai;
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.keygen.IKeyGenerator;
 import ie.gmit.sw.ai.keygen.KeyGenerator;
-import ie.gmit.sw.ai.simulated_annealing.FitnessMeasure;
+import ie.gmit.sw.ai.simulated_annealing.FitnessCalculator;
 
 public class CipherBreaker {
 	
     public static void main( String[] args ) {
     	long time = System.currentTimeMillis();
    
-    	FitnessMeasure fm = new FitnessMeasure();
+    	FitnessCalculator fm = new FitnessCalculator();
        	System.out.println(fm.logProbability("HAPPYDAYS"));
     	
         IKeyGenerator keygen = new KeyGenerator();

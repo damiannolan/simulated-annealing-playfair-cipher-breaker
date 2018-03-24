@@ -8,18 +8,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class FitnessMeasure {
+public class FitnessCalculator {
 	private static final String TEXTFILE = "4grams.txt"; 
 	private Map<String, Integer> dictionary;
 	private long totalQuadgrams;
 	
-	public FitnessMeasure() {
+	public FitnessCalculator() {
 		try {
 			this.dictionary = parse(TEXTFILE);
 			this.totalQuadgrams = getTotalQuadgrams();
 		} catch (Exception e) {
-			System.out.println("Error occurred while parsing text" + TEXTFILE);
-			e.printStackTrace();
+			System.out.println("Error occurred while parsing file: " + TEXTFILE);
 		}	
 	}
 	
@@ -39,7 +38,7 @@ public class FitnessMeasure {
 		return dictionary.values().stream().mapToLong(i->i).sum();
 	}
 	
-	private double nGramProbability(String key) {		
+	private double quadGramProbability(String key) {		
 		return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
 	}
 	
@@ -48,10 +47,11 @@ public class FitnessMeasure {
 		
 		return IntStream.range(0, (text.length() - 4 + 1))
 				.mapToObj(i -> new String(text.toCharArray(), i, 4))
-				.mapToDouble(ngram -> nGramProbability(ngram)).sum();
+				.mapToDouble(ngram -> quadGramProbability(ngram)).sum();
 	}
 	
 	public int getNGramFrequencyCount(String key) {
+		// NOT BEING USED - COULD GET RID FOR FINAL
 		return this.dictionary.get(key.toUpperCase());
 	}
 	
