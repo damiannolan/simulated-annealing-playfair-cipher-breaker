@@ -1,11 +1,11 @@
 package ie.gmit.sw.ai.cipher;
 
-public class PlayfairCipher extends AbstractCipher {
+public class PlayfairCipher {
 	private Digramator digramator;
 
-	public PlayfairCipher(String key) {
+	public PlayfairCipher() {
 		super();
-		super.setKey(key);
+		//super.setKey(key);
 		this.digramator = new Digramator();
 	}
 
@@ -15,7 +15,7 @@ public class PlayfairCipher extends AbstractCipher {
 
 	public String decrypt(String[] digrams, String key) {
 		StringBuilder plainText = new StringBuilder();
-		System.out.println(key);
+		//System.out.println(key);
 
 		for (String ngram : digrams) {
 			// For example - take the digram GC with the matrix key
@@ -45,7 +45,6 @@ public class PlayfairCipher extends AbstractCipher {
 		return plainText.toString();
 	}
 
-	@Override
 	public String encrypt(String[] digrams, String key) {
 		StringBuilder cipherText = new StringBuilder();
 

@@ -38,8 +38,10 @@ public class FitnessCalculator {
 		return dictionary.values().stream().mapToLong(i->i).sum();
 	}
 	
-	private double quadGramProbability(String key) {		
-		return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
+	private double quadGramProbability(String key) {
+		double temp = (double) getNGramFrequencyCount(key) / this.totalQuadgrams;
+		//return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
+		return Math.log10(temp);
 	}
 	
 	public double logProbability(String textString) {
@@ -47,11 +49,13 @@ public class FitnessCalculator {
 		
 		return IntStream.range(0, (text.length() - 4 + 1))
 				.mapToObj(i -> new String(text.toCharArray(), i, 4))
-				.mapToDouble(ngram -> quadGramProbability(ngram)).sum();
+				.mapToDouble(quadgram -> quadGramProbability(quadgram)).sum();
 	}
 	
 	public int getNGramFrequencyCount(String key) {
-		// NOT BEING USED - COULD GET RID FOR FINAL
+		if(this.dictionary.get(key.toUpperCase()) == null) {
+			return 1;
+		}
 		return this.dictionary.get(key.toUpperCase());
 	}
 	
