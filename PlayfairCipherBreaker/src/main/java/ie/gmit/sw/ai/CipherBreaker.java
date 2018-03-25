@@ -12,12 +12,21 @@ public class CipherBreaker {
 	
     public static void main( String[] args ) {
     	long time = System.currentTimeMillis();
-    	String message = "HFZQLYVEDWNITIQPQDUVHYLGXZHFNYBKPACAZQHFVQIQCUUVYCBXABQZQZURHQDZHBKDMVZQHXRGURLQHTXZQVDFYXZHRGGWHBYEGXNYYEGKYVHFLQDBWDVQIZEAUCAHHPQIBRRVBREZNYYQAHPUQDUVHYZXGNRDEOZWQFKCLZZHXVRDEOFEINQZZKZPKDYDCAMEEQUDBCLDBKPAE";
-    	
+    	String message = "HFZQLYVEDWNITIQPQDUVHYLGXZHFNYBKPACAZQHFVQIQCUUVYCBXABQZQZURHQDZHBKDMVZQHXRGURLQHTXZQVDFYXZHRGGWHBYEGXNYYEGKYVHFLQDBWDVQIZEAUCAHHPQIBRRVBREZNYYQAHPUQDUVHYZXGNRDEOZWQFKCLZZHXVRDEOFEINQZZKZPKDYDCAMEEQUDBCLDBKPAEDUVYCHFZQQEUMSVPBUMURLQHTXZXZCUHTVTPHMDLDRGMDLDVBHCMGUVYCQVPVDMSZXQCPDIQZLQKDUBEMTCYDDBCQGDFEUKQZVPCYUHKDIABDFVFEETGKIDOZEFURLQUVYCKDPTACYQUCFUPVVBBREZZXDTZPWCMEDILYTHZHADMUDBGQHBKIFEMDEWIZRGVQHTKCNWIEGNHCPLLUDPCOFTQGDPNWBYHCHFQZITQVGKUVYCHFBDQVHVHCHFDIYXHFBRUMLZKDZDFQFHNYLGSAPLQCCAZQHCPCBODITCVBMUHFDIYXHFBRUMLZKDLULIDLIDDLQRKWZQACYQUZBHZBDUBHQZUKUZEDGWTVBXABQZQZBUFEUFFTQVEKZQINAHMEPTDFNYFBIZEXBRRVBREZTCILEVFBEDHUBRWDLYTHFHIZNYCPOVBDLIZQHFQPQDUVHYLGCUNYOKDMPCHTXZPCGCHFDYLQDBLTHPQEKCGKTIQIBRVQHBQNDBRXBZEFRFVUEDQYNYMZCPBDHYLKCUXF";
+    	System.out.println(message.length());
     	KeyGenerator keygen = new KeyGenerator();
         String parent = keygen.generateKey();
         System.out.println(parent);
         System.out.println(parent.length());
+        
+        keygen.printCipherMatrix(parent);
+        System.out.println();
+        parent = keygen.keySwapCols(parent, 0, 1);
+        keygen.printCipherMatrix(parent);
+        System.out.println();
+
+        parent = keygen.keySwapChars(parent, "A", "B");
+        keygen.printCipherMatrix(parent);
         
     	PlayfairCipher playfair = new PlayfairCipher();
     	String[] digrams = playfair.createDigrams(message);
@@ -26,8 +35,7 @@ public class CipherBreaker {
     	FitnessCalculator fitness = new FitnessCalculator();
     	System.out.println(fitness.logProbability(decrypted));
     	double parentScore = fitness.logProbability(decrypted);
-    	
-/* SIM ANNEALING    	
+    	  	
     	String bestKey = "";
     	String decMessage = "";
     	String childKey;
@@ -36,7 +44,7 @@ public class CipherBreaker {
     	Random rand = new SecureRandom();
     	double bestScore = parentScore;
     	
-    	for(int temp = 10; temp >= 0; temp--) {
+    	for(int temp = 20; temp > 0; temp = temp - 1) {
     		for(int trans = 50000; trans >= 0; trans--) {
     			childKey = keygen.shuffleKey(parent);
     			//System.out.println(child);
@@ -45,13 +53,15 @@ public class CipherBreaker {
     			childScore = fitness.logProbability(decrypted);
 
     			dF = childScore - parentScore;
-    			//System.out.println(delta);
+    			//System.out.println("dF = " + dF);
+    			
     			if(dF > 0) {
     				parentScore = childScore;
     				parent = childKey;
     			} else if(dF < 0) {
-    				double prob = Math.exp((dF * -1 / temp));
-    				//System.out.println(prob);
+    				
+    				double prob = (Math.exp((dF / temp)));
+    				//System.out.println("Probability = " + prob);
     				if(prob > rand.nextDouble()) {
     					parentScore = childScore;
     					parent = childKey;
@@ -62,7 +72,7 @@ public class CipherBreaker {
     				bestScore = parentScore;
     				bestKey = parent;
     				decMessage = decrypted;
-    				System.out.println("Key: " + bestKey);
+    				System.out.println("Best Key: " + bestKey);
     		    	System.out.println("Decrypted Message: " + decMessage);
     			}
     		}
@@ -71,7 +81,7 @@ public class CipherBreaker {
     	System.out.println("Key: " + bestKey);
     	System.out.println("Decrypted Message: " + decMessage);
     	
- */
+ 
        	//System.out.println(fitness.logProbability("HAPPYDAYS"));
         /*
         key = keygen.createKey("THEQUICKBROWNFXMPDVLAZYGS");

@@ -64,25 +64,67 @@ public class KeyGenerator implements IKeyGenerator {
 		/*
 		 * TODO
 		 */
-		return key;
+		switch(this.rng.nextInt(100)) {
+			case 0:
+			case 1:
+				return keyReverse(key);
+			case 2:
+			case 3:
+				return keySwapCols(key, this.rng.nextInt(5), this.rng.nextInt(5));
+			case 4:
+			case 5:
+				return keySwapRows(key, this.rng.nextInt(5), this.rng.nextInt(5));
+			default:
+				String ch1 = Character.toString(key.charAt(this.rng.nextInt(25)));
+				String ch2 = Character.toString(key.charAt(this.rng.nextInt(25)));
+				return keySwapChars(key, ch1, ch2);
+		}
+		// return key;
 	}
 
-	public String keySwapChars(String key, String c1, String c2) {
-		return Arrays.stream(key.split(c1, -1))
-				.map(s -> s.replaceAll(c2, c1))
-				.collect(Collectors.joining(c2));
+	public String keySwapChars(String key, String one, String two) {	
+		return Arrays.stream(key.split(one, -1))
+				.map(s -> s.replaceAll(two, one))
+				.collect(Collectors.joining(two));
 	}
 	
 	public String keyReverse(String key) {
 		return new StringBuilder(key).reverse().toString();
 	}
 	
-	public String keySwapCols(String key) {
-		return null;
+	public String keySwapCols(String key, int c1, int c2) {
+		char[] cKey = key.toCharArray();
+		
+		for(int i = 0; i < 5; i++) {
+			char temp = cKey[i * 5 + c1];
+			cKey[i * 5 + c1] = cKey[i * 5 + c2];
+			cKey[i * 5 + c2] = temp;
+		}
+		
+		return new String(cKey);
 	}
 	
-	public String keySwapRows(String key) {
-		return null;
+	public String keySwapRows(String key, int r1, int r2) {
+		char[] cKey = key.toCharArray();
+		
+		for(int i = 0; i < 5; i++) {
+			char temp = cKey[r1 * 5 + i];
+			cKey[r1 * 5 + i] = cKey[r2 * 5 + i];
+			cKey[r2 * 5 + i] = temp;
+		}
+		
+		return new String(cKey);
+	}
+	
+	public void printCipherMatrix(String key) {
+		char[] cKey = key.toCharArray();
+		
+		for(int i = 1; i < 26; i++) {
+			System.out.print(cKey[i-1]);
+			
+			if(i % 5 == 0)
+				System.out.println();
+		}
 	}
 
 	public String fisherYates(String key) {
