@@ -39,9 +39,9 @@ public class FitnessCalculator {
 	}
 	
 	private double quadGramProbability(String key) {
-		double temp = (double) getNGramFrequencyCount(key) / this.totalQuadgrams;
-		//return Math.log10((double) dictionary.get(key.toUpperCase()) / this.totalQuadgrams);
-		return Math.log10(temp);
+		//double temp = (double) getNGramFrequencyCount(key) / this.totalQuadgrams;
+		return Math.log10((double) getNGramFrequencyCount(key) / this.totalQuadgrams);
+		//return Math.log10(temp);
 	}
 	
 	public double logProbability(String textString) {

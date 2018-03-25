@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class KeyGenerator implements IKeyGenerator {
@@ -19,13 +18,12 @@ public class KeyGenerator implements IKeyGenerator {
 
 	public String generateKey() {
 		List<Character> sequence = new ArrayList<Character>();
-
+		
 		for (char ch : PLAYFAIR_ALPHABET.toCharArray()) {
 			sequence.add(ch);
 		}
 
 		Collections.shuffle(sequence, this.rng);
-
 		StringBuilder builder = new StringBuilder(sequence.size());
 
 		for (Character ch : sequence) {
@@ -36,15 +34,12 @@ public class KeyGenerator implements IKeyGenerator {
 	}
 
 	public String createKey(String textString) {
-		// Convert toUpperCase(), replace() J with I, concat with
-		// PLAYFAIR_ALPHABET
-		// Finally remove duplicates and preserve the order of characters
 		String key = textString.toUpperCase().replace("J", "I") + PLAYFAIR_ALPHABET;
 
 		return removeDuplicates(key);
 	}
 
-	public static String removeDuplicates(String str) {
+	private static String removeDuplicates(String str) {
 		// https://codereview.stackexchange.com/questions/46777/eliminate-duplicates-from-strings
 		boolean seen[] = new boolean[256];
 		StringBuilder sb = new StringBuilder(seen.length);
@@ -61,9 +56,6 @@ public class KeyGenerator implements IKeyGenerator {
 	}
 
 	public String shuffleKey(String key) {
-		/*
-		 * TODO
-		 */
 		switch(this.rng.nextInt(100)) {
 			case 0:
 			case 1:
@@ -74,25 +66,30 @@ public class KeyGenerator implements IKeyGenerator {
 			case 4:
 			case 5:
 				return keySwapRows(key, this.rng.nextInt(5), this.rng.nextInt(5));
+			case 6:
+			case 7:
+				return keyFlipCols(key);
+			case 8:
+			case 9:
+				return keyFlipRows(key);
 			default:
 				String ch1 = Character.toString(key.charAt(this.rng.nextInt(25)));
 				String ch2 = Character.toString(key.charAt(this.rng.nextInt(25)));
 				return keySwapChars(key, ch1, ch2);
 		}
-		// return key;
 	}
 
-	public String keySwapChars(String key, String one, String two) {	
+	private String keySwapChars(String key, String one, String two) {	
 		return Arrays.stream(key.split(one, -1))
 				.map(s -> s.replaceAll(two, one))
 				.collect(Collectors.joining(two));
 	}
 	
-	public String keyReverse(String key) {
+	private String keyReverse(String key) {
 		return new StringBuilder(key).reverse().toString();
 	}
 	
-	public String keySwapCols(String key, int c1, int c2) {
+	private String keySwapCols(String key, int c1, int c2) {
 		char[] cKey = key.toCharArray();
 		
 		for(int i = 0; i < 5; i++) {
@@ -104,7 +101,7 @@ public class KeyGenerator implements IKeyGenerator {
 		return new String(cKey);
 	}
 	
-	public String keySwapRows(String key, int r1, int r2) {
+	private String keySwapRows(String key, int r1, int r2) {
 		char[] cKey = key.toCharArray();
 		
 		for(int i = 0; i < 5; i++) {
@@ -116,31 +113,56 @@ public class KeyGenerator implements IKeyGenerator {
 		return new String(cKey);
 	}
 	
-	public void printCipherMatrix(String key) {
-		char[] cKey = key.toCharArray();
+	private String keyFlipCols(String key) {
+		char[][] keyMatrix = toMatrix(key);
 		
-		for(int i = 1; i < 26; i++) {
-			System.out.print(cKey[i-1]);
-			
-			if(i % 5 == 0)
-				System.out.println();
-		}
-	}
-
-	public String fisherYates(String key) {
-		int index;
-		char[] chars = key.toCharArray();
-		Random random = ThreadLocalRandom.current();
-
-		for (int i = chars.length - 1; i > 0; i--) {
-			index = random.nextInt(i + 1);
-			if (index != i) {
-				chars[index] ^= chars[i];
-				chars[i] ^= chars[index];
-				chars[index] ^= chars[i];
+		for(int col = 0; col < keyMatrix[0].length; col++) {
+			for(int row = 0; row < keyMatrix.length / 2; row++) {
+				char temp = keyMatrix[row][col];
+                keyMatrix[row][col] = keyMatrix[keyMatrix.length - row - 1][col];
+                keyMatrix[keyMatrix.length - row - 1][col] = temp;
 			}
 		}
 
-		return new String(chars);
+		return matrixToString(keyMatrix);
+	}
+	
+	private String keyFlipRows(String key) {
+		char[][] keyMatrix = toMatrix(key);
+		
+		for(int row = 0; row < keyMatrix.length; row++){
+	        for(int col = 0; col < keyMatrix[row].length / 2; col++) {
+	            char temp = keyMatrix[row][col];
+	            keyMatrix[row][col] = keyMatrix[row][keyMatrix[row].length - col - 1];
+	            keyMatrix[row][keyMatrix[row].length - col - 1] = temp;
+	        }
+	    }
+		
+		return matrixToString(keyMatrix);
+	}
+	
+	private char[][] toMatrix(String key) {
+		char[][] keyMatrix = new char[5][5];
+		int index = 0;
+		
+		for(int i = 0; i < 5; i++) {
+			for(int j = 0; j < 5; j++) {
+				keyMatrix[i][j] = key.charAt(index);
+				index++;
+			}
+		}
+		return keyMatrix;
+	}
+	
+	private String matrixToString(char[][] keyMatrix) {
+		StringBuilder sb = new StringBuilder(keyMatrix.length);
+		
+		for(int i = 0; i < 5; i++) {
+			for(int j = 0; j < 5; j++) {
+				sb.append(keyMatrix[i][j]);
+			}
+		}
+		
+		return sb.toString();
 	}
 }

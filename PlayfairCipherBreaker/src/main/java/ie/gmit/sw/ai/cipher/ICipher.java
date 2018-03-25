@@ -1,6 +1,6 @@
 package ie.gmit.sw.ai.cipher;
 
-public interface ICipherator {
+public interface ICipher {
 	
 	public String encrypt(String[] digrams, String key);
 	

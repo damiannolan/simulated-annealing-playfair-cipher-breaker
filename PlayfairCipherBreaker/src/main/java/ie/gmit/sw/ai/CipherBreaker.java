@@ -20,7 +20,7 @@ public class CipherBreaker {
     	PlayfairCipher playfair = new PlayfairCipher();
     	FitnessCalculator fitness = new FitnessCalculator();
     	
-    	String parent = keygen.generateKey();        
+    	String parent = keygen.generateKey();
     	
     	String[] digrams = playfair.createDigrams(message);
     	String decrypted = playfair.decrypt(digrams, parent);
@@ -56,7 +56,6 @@ public class CipherBreaker {
     		    	System.out.println("Decrypted Message: " + decrypted);
     		    	System.out.printf("With Temperature: %d and Transitions: %d\n", temp, trans);;
     			}
-    			
     			
     		} // end transitions
     		
