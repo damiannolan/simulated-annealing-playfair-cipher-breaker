@@ -17,6 +17,10 @@ public class UserInterface {
 			displayMenu();
 			switch(promptUserOption("\nEnter option: ")) {
 				case 1:
+					/*
+					 * Prompt for file name
+					 * Specify output directory
+					 */
 					System.out.println("\nWork in progress");
 					break;
 				case 2:
