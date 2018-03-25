@@ -17,13 +17,13 @@ public class CipherBreaker {
     	Random rand = new SecureRandom();
 
     	IKeyGenerator keygen = new KeyGenerator();
-    	PlayfairCipher playfair = new PlayfairCipher();
+    	PlayfairCipher pf = new PlayfairCipher();
     	FitnessCalculator fitness = new FitnessCalculator();
     	
     	String parent = keygen.generateKey();
     	
-    	String[] digrams = playfair.createDigrams(message);
-    	String decrypted = playfair.decrypt(digrams, parent);
+    	String[] digrams = pf.createDigrams(message);
+    	String decrypted = pf.decrypt(digrams, parent);
 
     	double parentScore = fitness.logProbability(decrypted);
        	double bestScore = parentScore;
@@ -32,7 +32,7 @@ public class CipherBreaker {
     		
     		for(int trans = 50000; trans > 0; trans = trans - 1) {
     			String childKey = keygen.shuffleKey(parent);
-    			decrypted = playfair.decrypt(digrams, childKey);    			
+    			decrypted = pf.decrypt(digrams, childKey);    			
     			double childScore = fitness.logProbability(decrypted);
 
     			double dF = childScore - parentScore;
