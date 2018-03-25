@@ -13,55 +13,36 @@ public class CipherBreaker {
     public static void main( String[] args ) {
     	long time = System.currentTimeMillis();
     	String message = "HFZQLYVEDWNITIQPQDUVHYLGXZHFNYBKPACAZQHFVQIQCUUVYCBXABQZQZURHQDZHBKDMVZQHXRGURLQHTXZQVDFYXZHRGGWHBYEGXNYYEGKYVHFLQDBWDVQIZEAUCAHHPQIBRRVBREZNYYQAHPUQDUVHYZXGNRDEOZWQFKCLZZHXVRDEOFEINQZZKZPKDYDCAMEEQUDBCLDBKPAEDUVYCHFZQQEUMSVPBUMURLQHTXZXZCUHTVTPHMDLDRGMDLDVBHCMGUVYCQVPVDMSZXQCPDIQZLQKDUBEMTCYDDBCQGDFEUKQZVPCYUHKDIABDFVFEETGKIDOZEFURLQUVYCKDPTACYQUCFUPVVBBREZZXDTZPWCMEDILYTHZHADMUDBGQHBKIFEMDEWIZRGVQHTKCNWIEGNHCPLLUDPCOFTQGDPNWBYHCHFQZITQVGKUVYCHFBDQVHVHCHFDIYXHFBRUMLZKDZDFQFHNYLGSAPLQCCAZQHCPCBODITCVBMUHFDIYXHFBRUMLZKDLULIDLIDDLQRKWZQACYQUZBHZBDUBHQZUKUZEDGWTVBXABQZQZBUFEUFFTQVEKZQINAHMEPTDFNYFBIZEXBRRVBREZTCILEVFBEDHUBRWDLYTHFHIZNYCPOVBDLIZQHFQPQDUVHYLGCUNYOKDMPCHTXZPCGCHFDYLQDBLTHPQEKCGKTIQIBRVQHBQNDBRXBZEFRFVUEDQYNYMZCPBDHYLKCUXF";
-    	System.out.println(message.length());
-    	KeyGenerator keygen = new KeyGenerator();
-        String parent = keygen.generateKey();
-        System.out.println(parent);
-        System.out.println(parent.length());
-        
-        keygen.printCipherMatrix(parent);
-        System.out.println();
-        parent = keygen.keySwapCols(parent, 0, 1);
-        keygen.printCipherMatrix(parent);
-        System.out.println();
+    	
+    	Random rand = new SecureRandom();
 
-        parent = keygen.keySwapChars(parent, "A", "B");
-        keygen.printCipherMatrix(parent);
-        
+    	IKeyGenerator keygen = new KeyGenerator();
     	PlayfairCipher playfair = new PlayfairCipher();
+    	FitnessCalculator fitness = new FitnessCalculator();
+    	
+    	String parent = keygen.generateKey();        
+    	
     	String[] digrams = playfair.createDigrams(message);
     	String decrypted = playfair.decrypt(digrams, parent);
 
-    	FitnessCalculator fitness = new FitnessCalculator();
-    	System.out.println(fitness.logProbability(decrypted));
     	double parentScore = fitness.logProbability(decrypted);
-    	  	
-    	String bestKey = "";
-    	String decMessage = "";
-    	String childKey;
-    	double childScore;
-    	double dF;
-    	Random rand = new SecureRandom();
-    	double bestScore = parentScore;
-    	
+       	double bestScore = parentScore;
+       	    	
     	for(int temp = 20; temp > 0; temp = temp - 1) {
-    		for(int trans = 50000; trans >= 0; trans--) {
-    			childKey = keygen.shuffleKey(parent);
-    			//System.out.println(child);
-    			decrypted = playfair.decrypt(digrams, childKey);
-    			
-    			childScore = fitness.logProbability(decrypted);
+    		
+    		for(int trans = 50000; trans > 0; trans = trans - 1) {
+    			String childKey = keygen.shuffleKey(parent);
+    			decrypted = playfair.decrypt(digrams, childKey);    			
+    			double childScore = fitness.logProbability(decrypted);
 
-    			dF = childScore - parentScore;
-    			//System.out.println("dF = " + dF);
+    			double dF = childScore - parentScore;
     			
     			if(dF > 0) {
     				parentScore = childScore;
     				parent = childKey;
-    			} else if(dF < 0) {
-    				
+    			} else {    				
     				double prob = (Math.exp((dF / temp)));
-    				//System.out.println("Probability = " + prob);
+
     				if(prob > rand.nextDouble()) {
     					parentScore = childScore;
     					parent = childKey;
@@ -70,35 +51,21 @@ public class CipherBreaker {
     			
     			if(parentScore > bestScore) {
     				bestScore = parentScore;
-    				bestKey = parent;
-    				decMessage = decrypted;
-    				System.out.println("Best Key: " + bestKey);
-    		    	System.out.println("Decrypted Message: " + decMessage);
+    				String bestKey = parent;
+    				System.out.printf("\nBest Key: %s With Score: %.5f\n", bestKey, bestScore);
+    		    	System.out.println("Decrypted Message: " + decrypted);
+    		    	System.out.printf("With Temperature: %d and Transitions: %d\n", temp, trans);;
     			}
+    			
+    			
+    		} // end transitions
+    		
+    		if(parentScore == bestScore) {
+    			break;
     		}
-    	}
+    		
+    	} // end temperature
     	
-    	System.out.println("Key: " + bestKey);
-    	System.out.println("Decrypted Message: " + decMessage);
-    	
- 
-       	//System.out.println(fitness.logProbability("HAPPYDAYS"));
-        /*
-        key = keygen.createKey("THEQUICKBROWNFXMPDVLAZYGS");
-        System.out.println(key);
-        System.out.println(key.length());
-
-        PlayfairCipher playfair = new PlayfairCipher(key);
-        
-        String[] digrams = playfair.createDigrams("Hello World, my hell");
-        //String[] digrams = playfair.createDigrams("HEQEFIRCHITZMHUKOTXEDKWLHKHQVDSIEAKOZTXMTKOEEQSBXTDYHEUKUDBMKYZTFIRCEOMIYOZAEAMKIUZNQHTWDUOBVUDUPNOIEHEQKDLYWXNWILAZDYYOFTWAGADTVUDXXIEKITLKGKSIUYYOYETWDUOCHEFWHEKOABOKHUIMAREMWNFWFWIUNTTIOIOZAZTWFBRCHEXMTYDYHETIDTYOZRMAXWIUOITZMYDHBXHKUMSKXTDYMNXIMRNKZMXIHEXMHDTOOEKYSBQUKDOCHEZATCDEEKVUMXFCISGUYRFWRCOEEQUNZIIAKMVMQHEQMN");
-        String encrypted = playfair.encrypt(digrams, playfair.getKey());
-        System.out.println("Encrypted: " + encrypted);
-        
-        digrams = playfair.createDigrams(encrypted);
-        String decrypted = playfair.decrypt(digrams, playfair.getKey());
-        System.out.println("Decrypted: " + decrypted);
-        */
         long end = System.currentTimeMillis() - time;
         System.out.println(end + "ms");
     }
