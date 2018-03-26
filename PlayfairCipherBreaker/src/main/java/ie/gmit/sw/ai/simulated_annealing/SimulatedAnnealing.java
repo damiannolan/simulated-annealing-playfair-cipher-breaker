@@ -25,9 +25,6 @@ public class SimulatedAnnealing {
 	}
 
 	public void start() {
-		/*
-		 * Bulk of algorithm goes here
-		 */
 		Random rand = new SecureRandom();
 		String parentKey = keygen.generateKey();
 		String decipheredText = cipher.decrypt(parentKey);
@@ -35,8 +32,8 @@ public class SimulatedAnnealing {
 		double parentScore = fitness.logProbability(decipheredText);
 		double bestScore = parentScore;
 
-		for (int temp = this.temp; temp > 0; temp = temp - 1) {
-			for (int trans = 50000; trans > 0; trans = trans - 1) {
+		for (int temp = this.temp; temp > 0; temp--) {
+			for (int trans = 50000; trans > 0; trans--) {
 				String childKey = KeyShuffler.shuffleKey(parentKey);
 				decipheredText = cipher.decrypt(childKey);
 				double childScore = fitness.logProbability(decipheredText);
@@ -48,7 +45,6 @@ public class SimulatedAnnealing {
 					parentKey = childKey;
 				} else {
 					double prob = (Math.exp((dF / temp)));
-
 					if (prob > rand.nextDouble()) {
 						parentScore = childScore;
 						parentKey = childKey;
@@ -60,15 +56,14 @@ public class SimulatedAnnealing {
 					String bestKey = parentKey;
 					displayStats(bestKey, bestScore, decipheredText, temp, trans);
 				}
-
 			} // end transitions
-			
+
 			if (parentScore == bestScore) {
 				break;
 			}
 		} // end temperature
 	}
-	
+
 	public void displayStats(String bestKey, double bestScore, String decipheredText, int temp, int trans) {
 		System.out.printf("\nBest Key: %s With Score: %.5f\n", bestKey, bestScore);
 		System.out.println("Decrypted Message: " + decipheredText);

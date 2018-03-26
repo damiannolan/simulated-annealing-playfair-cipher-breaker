@@ -14,7 +14,7 @@ public class UserInterface {
 	public void start() {
 		running = true;
 		do {
-			displayMenu();
+			displayMainMenu();
 			switch(promptUserOption("\nEnter option: ")) {
 				case 1:
 					/*
@@ -30,11 +30,13 @@ public class UserInterface {
 					System.out.println("\nExiting application...");
 					running = false;
 					break;
+				default:
+					System.out.println("\nSorry - Invalid selection");
 			}
 		} while(running);
 	}
 	
-	private void displayMenu() {
+	private void displayMainMenu() {
 		System.out.println("============~~~Cipherator~~~=============");
 		System.out.println("(1) Decrypt Playfair Cipher");
 		System.out.println("(2) Encrypt Playfair Cipher");
