@@ -4,8 +4,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
-import ie.gmit.sw.ai.keygen.IKeyGenerator;
-import ie.gmit.sw.ai.keygen.KeyGenerator;
+import ie.gmit.sw.ai.keys.IKeyGenerator;
+import ie.gmit.sw.ai.keys.KeyGenerator;
+import ie.gmit.sw.ai.keys.KeyShuffler;
 import ie.gmit.sw.ai.simulated_annealing.FitnessCalculator;
 
 public class CipherBreaker {
@@ -17,7 +18,7 @@ public class CipherBreaker {
     	
     	Random rand = new SecureRandom();
 
-    	IKeyGenerator keygen = new KeyGenerator();
+    	IKeyGenerator keygen = KeyGenerator.getInstance();
     	PlayfairCipher pf = new PlayfairCipher(cipherText);
     	FitnessCalculator fitness = new FitnessCalculator();
     	
@@ -34,9 +35,12 @@ public class CipherBreaker {
     	for(int temp = 20; temp > 0; temp = temp - 1) {
     		
     		for(int trans = 50000; trans > 0; trans = trans - 1) {
-    			String childKey = keygen.shuffleKey(parent);
-    			//decrypted = pf.decrypt(digrams, childKey);
+    			
+    			String childKey = KeyShuffler.shuffleKey(parent);
+    			
     			decrypted = pf.decrypt(childKey);
+    			//decrypted = pf.decrypt(digrams, childKey);
+    			
     			double childScore = fitness.logProbability(decrypted);
 
     			double dF = childScore - parentScore;

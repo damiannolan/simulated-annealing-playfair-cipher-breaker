@@ -1,10 +1,8 @@
-package ie.gmit.sw.ai.keygen;
+package ie.gmit.sw.ai.keys;
 
 public interface IKeyGenerator {
 	
 	public String generateKey();
 	
 	public String generateKey(String textString);
-	
-	public String shuffleKey(String key);
 }
