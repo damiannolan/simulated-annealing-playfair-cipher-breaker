@@ -16,10 +16,7 @@ public class KeyGenerator implements IKeyGenerator {
 	}
 	
 	public static IKeyGenerator getInstance() {
-		if(keygen == null) {
-			keygen = new KeyGenerator();
-		}
-		return keygen;
+		return keygen == null ? keygen = new KeyGenerator() : keygen;
 	}
 
 	public String generateKey() {
@@ -39,8 +36,8 @@ public class KeyGenerator implements IKeyGenerator {
 		return builder.toString();
 	}
 
-	public String generateKey(String textString) {
-		String key = textString.toUpperCase().replace("J", "I") + PLAYFAIR_ALPHABET;
+	public String generateKey(String secret) {
+		String key = secret.toUpperCase().replace("J", "I") + PLAYFAIR_ALPHABET;
 
 		return removeDuplicates(key);
 	}

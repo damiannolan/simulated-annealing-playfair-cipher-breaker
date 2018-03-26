@@ -4,14 +4,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
-import ie.gmit.sw.ai.keys.IKeyGenerator;
-import ie.gmit.sw.ai.keys.KeyGenerator;
 import ie.gmit.sw.ai.keys.KeyShuffler;
 
 public class SimulatedAnnealing {
-	// probably don't need this
-	// if PlayfairCipher contains the parentKey access via getKey()
-	private IKeyGenerator keygen;
 	private PlayfairCipher cipher;
 	private FitnessCalculator fitness;
 	private int temp;
@@ -19,14 +14,13 @@ public class SimulatedAnnealing {
 	public SimulatedAnnealing(PlayfairCipher cipher, int temp) {
 		super();
 		this.fitness = new FitnessCalculator();
-		this.keygen = KeyGenerator.getInstance();
 		this.cipher = cipher;
 		this.temp = temp;
 	}
 
 	public void start() {
 		Random rand = new SecureRandom();
-		String parentKey = keygen.generateKey();
+		String parentKey = cipher.getKey();
 		String decipheredText = cipher.decrypt(parentKey);
 
 		double parentScore = fitness.logProbability(decipheredText);

@@ -1,10 +1,12 @@
 package ie.gmit.sw.ai.cipher;
 
 import ie.gmit.sw.ai.cipher.digrams.Digramator;
+import ie.gmit.sw.ai.keys.IKeyGenerator;
+import ie.gmit.sw.ai.keys.KeyGenerator;
 
 public class PlayfairCipher extends AbstractCipher {
-	// Could change to use a keygen here
-	// private IKeyGenerator keygen;
+	private IKeyGenerator keygen;
+	private String key;
 	private String[] digrams;
 	
 	public PlayfairCipher() {
@@ -14,19 +16,21 @@ public class PlayfairCipher extends AbstractCipher {
 	public PlayfairCipher(String text) {
 		super();
 		this.digrams = createDigrams(text);
-		//this.keygen = KeyGenerator.getInstance();
-		//this.key = generateKey(secret);
 	}
 
 	public PlayfairCipher(String text, String secret) {
 		super();
 		this.digrams = createDigrams(text);
-		//this.keygen = KeyGenerator.getInstance();
-		//this.key = generateKey(secret);
+		this.keygen = KeyGenerator.getInstance();
+		this.key = keygen.generateKey(secret);
 	}
 	
 	public String[] createDigrams(String text) {
 		return new Digramator().createDigrams(text);
+	}
+	
+	public String getKey() {
+		return key == null ? this.keygen.generateKey() : key;
 	}
 	
 	public String decrypt(String key) {
