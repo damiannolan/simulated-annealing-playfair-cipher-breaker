@@ -21,7 +21,7 @@ public class UserInterface {
 					 * Prompt for file name
 					 * Specify output directory
 					 */
-					System.out.println("\nWork in progress");
+					displaySubMenu1();
 					break;
 				case 2:
 					System.out.println("\nWork in progress");
@@ -43,6 +43,29 @@ public class UserInterface {
 		System.out.println("(3) Exit");
 		System.out.println("=========================================");
 
+	}
+	
+	private void displaySubMenu1() {
+		boolean submenu = true;
+		do {
+			System.out.println("\n(1) Select file");
+			System.out.println("(2) Enter a URL from the internet");
+			System.out.println("(3) Back");
+			switch(promptUserOption("\nEnter option: ")) {
+				case 1:
+					// List files we have
+					System.out.println("\nWork in progress");
+					break;
+				case 2:
+					// Enter a URL from the internet
+					System.out.println("\nWork in progress");
+					break;
+				case 3:
+					submenu = false;
+					break;
+			}
+		} while(submenu);
+		
 	}
 	
 	private int promptUserOption(String message) {
