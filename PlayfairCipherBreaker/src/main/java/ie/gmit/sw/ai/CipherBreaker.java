@@ -25,6 +25,7 @@ public class CipherBreaker {
     	
     	//String[] digrams = pf.createDigrams(cipherText);
     	//String decrypted = pf.decrypt(digrams, parent);
+    	
     	String decrypted = pf.decrypt(parent);
 
     	double parentScore = fitness.logProbability(decrypted);

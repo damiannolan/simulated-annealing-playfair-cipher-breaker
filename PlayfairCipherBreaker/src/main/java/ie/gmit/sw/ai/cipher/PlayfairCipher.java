@@ -1,22 +1,32 @@
 package ie.gmit.sw.ai.cipher;
 
+import ie.gmit.sw.ai.cipher.digrams.Digramator;
+
 public class PlayfairCipher extends AbstractCipher {
-	private Digramator digramator;
+	// Could change to use a keygen here
+	// private IKeyGenerator keygen;
 	private String[] digrams;
 	
 	public PlayfairCipher() {
 		super();
-		this.digramator = new Digramator();
 	}
 
 	public PlayfairCipher(String text) {
 		super();
-		this.digramator = new Digramator();
 		this.digrams = createDigrams(text);
+		//this.keygen = KeyGenerator.getInstance();
+		//this.key = generateKey(secret);
 	}
 
+	public PlayfairCipher(String text, String secret) {
+		super();
+		this.digrams = createDigrams(text);
+		//this.keygen = KeyGenerator.getInstance();
+		//this.key = generateKey(secret);
+	}
+	
 	public String[] createDigrams(String text) {
-		return digramator.createDigrams(text);
+		return new Digramator().createDigrams(text);
 	}
 	
 	public String decrypt(String key) {

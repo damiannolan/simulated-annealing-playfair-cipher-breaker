@@ -1,4 +1,4 @@
-package ie.gmit.sw.ai.cipher;
+package ie.gmit.sw.ai.cipher.digrams;
 
 public class Digramator implements IDigramator {
 	

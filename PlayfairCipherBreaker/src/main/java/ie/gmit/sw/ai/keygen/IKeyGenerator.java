@@ -4,7 +4,7 @@ public interface IKeyGenerator {
 	
 	public String generateKey();
 	
-	public String createKey(String textString);
+	public String generateKey(String textString);
 	
 	public String shuffleKey(String key);
 }

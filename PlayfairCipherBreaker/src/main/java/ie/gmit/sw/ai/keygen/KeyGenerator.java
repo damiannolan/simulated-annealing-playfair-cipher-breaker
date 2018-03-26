@@ -9,6 +9,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class KeyGenerator implements IKeyGenerator {
+	/*
+	 * Turn into a singleton factory - static getInstance()
+	 * One KeyGenerator
+	 * Generates "PlayfairCipherKey"
+	 * 
+	 * - 
+	 */
 	private static final String PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 	private Random rng;
 
@@ -33,7 +40,7 @@ public class KeyGenerator implements IKeyGenerator {
 		return builder.toString();
 	}
 
-	public String createKey(String textString) {
+	public String generateKey(String textString) {
 		String key = textString.toUpperCase().replace("J", "I") + PLAYFAIR_ALPHABET;
 
 		return removeDuplicates(key);
