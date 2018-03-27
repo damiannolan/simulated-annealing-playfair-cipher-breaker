@@ -2,16 +2,18 @@ package ie.gmit.sw.ai.ui;
 
 import java.util.Scanner;
 
-import ie.gmit.sw.ai.documents.DocumentManager;
+import ie.gmit.sw.ai.cipher.PlayfairCipher;
+import ie.gmit.sw.ai.documents.DocumentService;
+import ie.gmit.sw.ai.documents.TextDocument;
 
 public class UserInterface {
 	private boolean running;
 	private Scanner sc;
-	private DocumentManager docManager;
+	private DocumentService docService;
 	
 	public UserInterface() { 
 		this.sc = new Scanner(System.in);
-		this.docManager = new DocumentManager("./resources");
+		this.docService = new DocumentService("./resources");
 
 	}
 	
@@ -19,7 +21,7 @@ public class UserInterface {
 		running = true;
 		do {
 			displayMainMenu();
-			switch(promptUserOption("\nEnter option: ")) {
+			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
 					displaySubMenu1();
 					break;
@@ -49,16 +51,16 @@ public class UserInterface {
 		boolean submenu = true;
 		do {
 			System.out.println("\n(1) List files");
-			System.out.println("(2) Enter <filename.txt> or provide a URL from the internet");
+			System.out.println("(2) Enter <filename.txt>");
 			System.out.println("(3) Back");
-			switch(promptUserOption("\nEnter option: ")) {
+			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
-					// List files we have
-					docManager.listDocuments();
+					docService.listDocuments();
 					break;
 				case 2:
-					// Enter a URL from the internet
-					System.out.println("\nWork in progress");
+					TextDocument doc = docService.newTextDocument(promptUserText("Please provide <filename.txt>: "));
+					PlayfairCipher cipher = new PlayfairCipher(doc.getText());
+					System.out.println(doc.getText());
 					break;
 				case 3:
 					submenu = false;
@@ -68,8 +70,13 @@ public class UserInterface {
 		
 	}
 	
-	private int promptUserOption(String message) {
+	private int promptUserOptionInt(String message) {
 		System.out.print(message);
 		return sc.nextInt();
+	}
+	
+	private String promptUserText(String message) {
+		System.out.print(message);
+		return sc.next();
 	}
 }
