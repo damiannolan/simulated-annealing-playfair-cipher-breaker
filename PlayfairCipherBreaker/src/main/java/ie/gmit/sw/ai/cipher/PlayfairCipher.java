@@ -16,6 +16,7 @@ public class PlayfairCipher extends AbstractCipher {
 	public PlayfairCipher(String text) {
 		super();
 		this.digrams = createDigrams(text);
+		this.keygen = KeyGenerator.getInstance();
 	}
 
 	public PlayfairCipher(String text, String secret) {
@@ -30,7 +31,7 @@ public class PlayfairCipher extends AbstractCipher {
 	}
 	
 	public String getKey() {
-		return key == null ? this.keygen.generateKey() : key;
+		return key == null ? this.key = this.keygen.generateKey() : key;
 	}
 	
 	public String decrypt(String key) {
