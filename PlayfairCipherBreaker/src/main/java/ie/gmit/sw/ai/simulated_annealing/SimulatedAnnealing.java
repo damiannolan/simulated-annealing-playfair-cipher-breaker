@@ -7,26 +7,23 @@ import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.keys.KeyShuffler;
 
 public class SimulatedAnnealing {
-	private PlayfairCipher cipher;
 	private FitnessCalculator fitness;
-	private int temp;
-
-	public SimulatedAnnealing(PlayfairCipher cipher, int temp) {
+	private Random rand;
+	
+	public SimulatedAnnealing() {
 		super();
 		this.fitness = new FitnessCalculator();
-		this.cipher = cipher;
-		this.temp = temp;
+		this.rand = new SecureRandom();
 	}
-
-	public void start() {
-		Random rand = new SecureRandom();
+	
+	public void solve(PlayfairCipher cipher, int temperature) {
 		String parentKey = cipher.getKey();
 		String decipheredText = cipher.decrypt(parentKey);
 
 		double parentScore = fitness.logProbability(decipheredText);
 		double bestScore = parentScore;
 
-		for (int temp = this.temp; temp > 0; temp--) {
+		for (int temp = temperature; temp > 0; temp--) {
 			for (int trans = 50000; trans > 0; trans--) {
 				String childKey = KeyShuffler.shuffleKey(parentKey);
 				decipheredText = cipher.decrypt(childKey);

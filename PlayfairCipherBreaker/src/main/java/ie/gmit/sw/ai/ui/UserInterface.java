@@ -5,16 +5,18 @@ import java.util.Scanner;
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.documents.DocumentService;
 import ie.gmit.sw.ai.documents.TextDocument;
+import ie.gmit.sw.ai.simulated_annealing.SimulatedAnnealing;
 
 public class UserInterface {
 	private boolean running;
 	private Scanner sc;
 	private DocumentService docService;
+	private SimulatedAnnealing simulatedAnnealing;
 	
 	public UserInterface() { 
 		this.sc = new Scanner(System.in);
 		this.docService = new DocumentService("./resources");
-
+		this.simulatedAnnealing = new SimulatedAnnealing();
 	}
 	
 	public void start() {
@@ -60,7 +62,7 @@ public class UserInterface {
 				case 2:
 					TextDocument doc = docService.newTextDocument(promptUserText("Please provide <filename.txt>: "));
 					PlayfairCipher cipher = new PlayfairCipher(doc.getText());
-					System.out.println(doc.getText());
+					simulatedAnnealing.solve(cipher, promptUserOptionInt("Enter temperature: "));
 					break;
 				case 3:
 					submenu = false;
