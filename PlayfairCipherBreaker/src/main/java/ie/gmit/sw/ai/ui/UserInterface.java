@@ -2,13 +2,17 @@ package ie.gmit.sw.ai.ui;
 
 import java.util.Scanner;
 
+import ie.gmit.sw.ai.documents.DocumentManager;
+
 public class UserInterface {
-	
 	private boolean running;
 	private Scanner sc;
+	private DocumentManager docManager;
 	
 	public UserInterface() { 
-		sc = new Scanner(System.in);
+		this.sc = new Scanner(System.in);
+		this.docManager = new DocumentManager("./resources");
+
 	}
 	
 	public void start() {
@@ -17,10 +21,6 @@ public class UserInterface {
 			displayMainMenu();
 			switch(promptUserOption("\nEnter option: ")) {
 				case 1:
-					/*
-					 * Prompt for file name
-					 * Specify output directory
-					 */
 					displaySubMenu1();
 					break;
 				case 2:
@@ -48,13 +48,13 @@ public class UserInterface {
 	private void displaySubMenu1() {
 		boolean submenu = true;
 		do {
-			System.out.println("\n(1) Select file");
-			System.out.println("(2) Enter a URL from the internet");
+			System.out.println("\n(1) List files");
+			System.out.println("(2) Enter <filename.txt> or provide a URL from the internet");
 			System.out.println("(3) Back");
 			switch(promptUserOption("\nEnter option: ")) {
 				case 1:
 					// List files we have
-					System.out.println("\nWork in progress");
+					docManager.listDocuments();
 					break;
 				case 2:
 					// Enter a URL from the internet
