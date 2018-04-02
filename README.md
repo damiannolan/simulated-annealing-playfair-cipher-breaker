@@ -125,8 +125,8 @@ P(HAPPYDAYS) = P(HAPP) × P(APPY) × P(PPYD) × P(PYDA) × P(YDAY)
 
 One side effect of multiplying probabilities with very small floating point values is that
 underflow can occur if the exponent becomes too low to be represented. For example, a Java
-_*float*_ is a 32-bit IEEE 754 type with a 1-bit sign, an 8-bit exponent and a 23-bit mantissa. The
-64-bit IEEE 754 _*double*_ has a 1-bit sign, a 11-bit exponent and a 52-bit mantissa. A simple way
+**_float_** is a 32-bit IEEE 754 type with a 1-bit sign, an 8-bit exponent and a 23-bit mantissa. The
+64-bit IEEE 754 __*double*__ has a 1-bit sign, a 11-bit exponent and a 52-bit mantissa. A simple way
 of avoiding this is to get the log (usually base 10) of the probability and use the identity log(a
 × b) = log(a) + log(b). Thus, the score, h(n), for “HAPPYDAYS” can be computed as a log
 probability:
@@ -135,6 +135,15 @@ probability:
 log10(P(HAPPYDAYS)) = log10(P(HAPP)) + log10(P(APPY)) + log10(P(PPYD)) + log10(P(PYDA)) + log10(P(YDAY)
 ```
 
+The resource **_quadgrams.txt_** is a text file containing a total of 389,373 4-grams, from a
+maximum possible number of 26<sup>4</sup>=456,976. The 4-grams and the count of their occurrence
+were computed by sampling a set of text documents containing an aggregate total of
+4,224,127,912 4-grams. The top 10 4-grams and their occurrence is tabulated below:
+
+| Quadgram *q* | Count(*q* | Quadgram *q* | Count(*q*) |
+| ------------ | --------- | ------------ | ---------- |
+| TION         | 13168375  | FTHE         | 8100836    |
+| NTHE         | 11234972  | THES         | 7717675    |
 
 
 ## References
