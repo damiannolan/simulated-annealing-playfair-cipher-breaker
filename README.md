@@ -1,5 +1,5 @@
 # Using Simulated Annealing to Break a Playfair Cipher
-
+ 
 ## Overview
 
 The field of [*cryptanalysis*](https://en.wikipedia.org/wiki/Cryptanalysis) is concerned with the study of [ciphers](https://en.wikipedia.org/wiki/Cipher),
@@ -64,6 +64,40 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
 not make sense in the final message when finished).
 
 NOTE: There are several minor variations of the original Playfair Cipher.
+
+## The Simulated Annealing Algorithm
+
+[Simulated annealing (SA)](https://en.wikipedia.org/wiki/Simulated_annealing) is an excellent approach for breaking a cipher using a randomly
+generated key. Unlike conventional Hill Climbing algorithms, that are easily side-tracked by
+local optima, SA uses randomization to avoid heuristic plateaux and attempt to find a global
+maxima solution. 
+
+*Note:* The initial value of the variables temp and transitions can have a
+major impact on the success of the SA algorithm. Both variables control the cooling schedule
+of SA and should be experimented with for best results. 
+
+For the purposes of this project the transitions variable is hardcoded at 50,000. However, a user may enter 
+a desired starting temperature and play around with how it affects the outcome of the results.
+
+### Simulated Annealing Pseudocode
+The following pseudocode shows how simulated annealing can be used break
+a Playfair Cipher:
+
+```
+1. Generate a random key, called the 'parent', decipher the ciphertext 
+    using this key. 
+2. Rate the fitness of the deciphered text, store the result.
+3. for(TEMP = 10; TEMP >= 0; TEMP = TEMP - STEP)
+      for (trans = 50,000; trans > 0; trans--)
+         Change the parent key slightly (e.g. swap two characters in the 
+           key at random) to get child key, 
+         Measure the fitness of the deciphered text using the child key
+         set dF = (fitness of child - fitness of parent)
+         If dF > 0 (fitness of child is higher than parent key), 
+             set parent = child
+         If dF < 0 (fitness of child is worse than parent), 
+             set parent = child with probability e^(dF/T). 
+```
 
 ## References
 
