@@ -99,6 +99,44 @@ a Playfair Cipher:
              set parent = child with probability e^(dF/T). 
 ```
 
+### Key Shuffling
+The method `shuffleKey()` on line 6 should make the following changes to the key with the
+frequency given (you can approximate this using `Math.random() * 100`):
+
+- Swap single letters (90%)
+- Swap random rows (2%)
+- Swap columns (2%)
+- Flip all rows (2%)
+- Flip all columns (2%)
+- Reverse the whole key (2%)
+
+## Using *n*-Gram Statistics as a Heuristic Function
+An n-gram (gram = word or letter) is a substring of a word(s) of length n and can be used to
+measure how similar some decrypted text is to English. For example, the quadgrams (4-grams)
+of the word “HAPPYDAYS” are “HAPP”, “APPY”, “PPYD”, “PYDA”, “YDAY” and
+“DAYS”. A fitness measure or heuristic score can be computed from the frequency of
+occurrence of a 4-gram, q, as follows: P(*q*) = count(*q*) / *n*, where *n* is the total number of 4-
+grams from a large sample source. An overall probability of the phrase “HAPPYDAYS” can
+be accomplished by multiplying the probability of each of its 4-grams:
+
+```
+P(HAPPYDAYS) = P(HAPP) × P(APPY) × P(PPYD) × P(PYDA) × P(YDAY)
+```
+
+One side effect of multiplying probabilities with very small floating point values is that
+underflow can occur if the exponent becomes too low to be represented. For example, a Java
+_*float*_ is a 32-bit IEEE 754 type with a 1-bit sign, an 8-bit exponent and a 23-bit mantissa. The
+64-bit IEEE 754 _*double*_ has a 1-bit sign, a 11-bit exponent and a 52-bit mantissa. A simple way
+of avoiding this is to get the log (usually base 10) of the probability and use the identity log(a
+× b) = log(a) + log(b). Thus, the score, h(n), for “HAPPYDAYS” can be computed as a log
+probability:
+
+```
+log10(P(HAPPYDAYS)) = log10(P(HAPP)) + log10(P(APPY)) + log10(P(PPYD)) + log10(P(PYDA)) + log10(P(YDAY)
+```
+
+
+
 ## References
 
 1. [Cryptanalysis of the Playfair Cipher](http://practicalcryptography.com/cryptanalysis/stochastic-searching/cryptanalysis-playfair/)
