@@ -140,11 +140,29 @@ maximum possible number of 26<sup>4</sup>=456,976. The 4-grams and the count of 
 were computed by sampling a set of text documents containing an aggregate total of
 4,224,127,912 4-grams. The top 10 4-grams and their occurrence is tabulated below:
 
-| Quadgram *q* | Count(*q* | Quadgram *q* | Count(*q*) |
-| ------------ | --------- | ------------ | ---------- |
-| TION         | 13168375  | FTHE         | 8100836    |
-| NTHE         | 11234972  | THES         | 7717675    |
+| Quadgram-*q* | Count(*q*) | Quadgram-*q* | Count(*q*) |
+| ------------ | ---------- | ------------ | ---------- |
+| TION         | 13168375   | FTHE         | 8100836    |
+| NTHE         | 11234972   | THES         | 7717675    |
+| THER         | 10218035   | WITH         | 7627991    |
+| THAT         | 8980536    | INTH         | 7261789    |
+| OFTH         | 8132597    | ATIO         | 7104943    |
 
+The 4-grams of “HAPPYDAYS”, their count, probability and log value are tabulated below.
+
+| Quadgram-*q* | Count(*q*) | Probability(*q*) | Log<sub>10</sub>(P(*q*)) |
+| ------------ | ---------- | ---------------- | ------------------------ |
+| HAPP         | 462336     | 0.000109451      | -3.960779349             |
+| APPY         | 116946     | 0.000027685      | -4.557751689             |
+| PPYD         | 4580       | 0.000001084      | -5.964871583             |
+| PYDA         | 1439       | 0.000000340      | -6.467676267             |
+| YDAY         | 108338     | 0.000025647      | -4.590956247             |
+| DAYS         | 635317     | 0.000150401      | -3.822746584             |
+
+The final score, **_h(n)_**, for “HAPPYDAYS” is just the sum of the log probabilities, i.e. -
+3.960779349 + -4.557751689 + -5.964871583 + -6.467676267 + -4.590956247 + -
+3.822746584 = **-29.36478172**. A decrypted message with a larger score than this is more
+“English” than this text and therefore must have been decrypted with a “better” key.
 
 ## References
 
