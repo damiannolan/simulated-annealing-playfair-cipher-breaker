@@ -113,10 +113,10 @@ frequency given (you can approximate this using `Math.random() * 100`):
 ## Using *n*-Gram Statistics as a Heuristic Function
 An n-gram (gram = word or letter) is a substring of a word(s) of length n and can be used to
 measure how similar some decrypted text is to English. For example, the quadgrams (4-grams)
-of the word “HAPPYDAYS” are “HAPP”, “APPY”, “PPYD”, “PYDA”, “YDAY” and
-“DAYS”. A fitness measure or heuristic score can be computed from the frequency of
+of the word "HAPPYDAYS" are "HAPP", "APPY", "PPYD", "PYDA", "YDAY" and
+"DAYS". A fitness measure or heuristic score can be computed from the frequency of
 occurrence of a 4-gram, q, as follows: P(*q*) = count(*q*) / *n*, where *n* is the total number of 4-
-grams from a large sample source. An overall probability of the phrase “HAPPYDAYS” can
+grams from a large sample source. An overall probability of the phrase "HAPPYDAYS" can
 be accomplished by multiplying the probability of each of its 4-grams:
 
 ```
@@ -159,10 +159,10 @@ The 4-grams of “HAPPYDAYS”, their count, probability and log value are tabul
 | YDAY         | 108338     | 0.000025647      | -4.590956247             |
 | DAYS         | 635317     | 0.000150401      | -3.822746584             |
 
-The final score, **_h(n)_**, for “HAPPYDAYS” is just the sum of the log probabilities, i.e. -
+The final score, **_h(n)_**, for "HAPPYDAYS" is just the sum of the log probabilities, i.e. -
 3.960779349 + -4.557751689 + -5.964871583 + -6.467676267 + -4.590956247 + -
 3.822746584 = **-29.36478172**. A decrypted message with a larger score than this is more
-“English” than this text and therefore must have been decrypted with a “better” key.
+"English" than this text and therefore must have been decrypted with a “better” key.
 
 ## References
 
