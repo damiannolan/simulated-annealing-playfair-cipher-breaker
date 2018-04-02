@@ -31,4 +31,12 @@ public class DocumentService {
 	public String parseTextFile(String textFile) throws IOException {		
 		return Files.lines(Paths.get(path + "/" + textFile)).collect(Collectors.joining());
 	}
+	
+	public void writeToFile(String name, String text) {
+		try {
+			Files.write(Paths.get("./output/dec_" + name), text.getBytes());
+		} catch (IOException e) {
+			System.out.println("Error writing to file");
+		}
+	}
 }

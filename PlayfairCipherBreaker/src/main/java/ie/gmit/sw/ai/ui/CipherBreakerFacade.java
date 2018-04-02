@@ -51,6 +51,6 @@ public class CipherBreakerFacade {
 		System.out.println("=============Result=============");
 		System.out.println(result.toString());
 		
-		//docService.writeToFile(result.getTextResult());
+		docService.writeToFile(doc.getName().substring(4), result.getTextResult());
 	}
 }
