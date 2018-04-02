@@ -13,7 +13,7 @@ public class SAResult {
 	}
 	
 	public String toString() {
-		return String.format("\nBest Key: %s With Score: %.5f\n"
+		return String.format("Best Key: %s With Score: %.5f\n"
 				+ "Decrypted Message: %s\n",
 				bestKey, bestScore, textResult);
 	}
