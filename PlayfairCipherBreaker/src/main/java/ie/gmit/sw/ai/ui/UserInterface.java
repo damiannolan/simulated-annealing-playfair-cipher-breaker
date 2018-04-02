@@ -19,10 +19,10 @@ public class UserInterface {
 			displayMainMenu();
 			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
-					displaySubMenu1();
+					decryptionMenu();
 					break;
 				case 2:
-					System.out.println("\nWork in progress");
+					encryptionMenu();
 					break;
 				case 3:
 					System.out.println("\nExiting application...");
@@ -42,10 +42,10 @@ public class UserInterface {
 		System.out.println("============================================");
 	}
 	
-	private void displaySubMenu1() {
+	private void decryptionMenu() {
 		boolean submenu = true;
 		do {
-			System.out.println("\n(1) List Cipher Text Resources");
+			System.out.println("\n(1) List Resources");
 			System.out.println("(2) Decrypt Cipher Text");
 			System.out.println("(3) Back");
 			switch(promptUserOptionInt("\nEnter option: ")) {
@@ -64,6 +64,30 @@ public class UserInterface {
 					break;
 			}
 		} while(submenu);
+	}
+	
+	private void encryptionMenu() {
+		boolean submenu = true;
+		
+		do {
+			System.out.println("\n(1) List Resources");
+			System.out.println("(2) Encrypt Plain Text");
+			System.out.println("(3) Back");
+			
+			switch(promptUserOptionInt("\nEnter option: ")) {
+				case 1:
+					cipherBreaker.listDocuments();
+					break;
+				case 2:
+					System.out.println("=========Create Key=========");
+					String secret = promptUserText("Please enter a key secret using chars[A-Z]: ");
+					
+				case 3:
+					submenu = false;
+					break;
+				
+			}
+		} while(submenu);	
 	}
 	
 	private void setTextDocument() {

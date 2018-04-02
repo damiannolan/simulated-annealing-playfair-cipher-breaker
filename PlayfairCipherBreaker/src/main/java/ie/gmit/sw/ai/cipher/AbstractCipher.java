@@ -6,8 +6,8 @@ public abstract class AbstractCipher implements ICipher {
 		super();
 	}
 	
-	public abstract String encrypt(String[] digrams, String key);
+	public abstract String encrypt(String key);
 	
-	public abstract String decrypt(String[] digrams, String key);
+	public abstract String decrypt(String key);
 	
 }

@@ -42,12 +42,12 @@ git clone https://github.com/damiannolan/simulated-annealing-playfair-cipher-bre
 
 2. Build the project from the PlayfairCipherBreaker directory
 ```
-mvn build
+mvn install 
 ```
 
 3. Run the CLI application
 ```
-java -cp java –cp ./target/PlayfairCipherBreaker-0.0.1-SNAPSHOT.jar ie.gmit.sw.ai.CipherBreaker
+java -cp ./target/PlayfairCipherBreaker-0.0.1-SNAPSHOT.jar ie.gmit.sw.ai.CipherBreaker
 ```
 
 <a name="playfair-cipher"></a>

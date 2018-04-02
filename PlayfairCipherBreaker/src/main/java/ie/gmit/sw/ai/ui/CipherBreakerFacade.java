@@ -21,8 +21,8 @@ public class CipherBreakerFacade {
 	}
 	
 	public void listDocuments() {
-		System.out.println("\n*NOTE:\tThe following documents include both encrypted ciphertext and deciphered output.");
-		System.out.println("\tDocuments listed as enc_*.txt are intended to be used for the demonstration of SA.");
+		System.out.println("\n*NOTE:\tThe following documents include both encrypted ciphertexts and plaintexts.");
+		System.out.println("\tDocuments listed as enc_*.txt are intended to be used for the demonstration of Simulated Annealing Decryption.");
 		System.out.println("\tIn contrast, Documents listed as plain_*.txt are intended for the demonstration of encryption.");
 		System.out.println("\n=========Documents=========");
 		this.docService.listDocuments();
