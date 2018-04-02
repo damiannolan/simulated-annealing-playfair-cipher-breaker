@@ -17,7 +17,13 @@ existing map of *n*-grams and their frequency. This process does not guarantee t
 answer will be the correct plain-text, but can give a good approximation that may well be the
 right answer.
 
-## Playfair Cipher
+### Contents
+1. [The Playfair Cipher](#The-Playfair-Cipher)
+2. [The Simulated Annealing Algorithm](#The-Simulated-Annealing-Algorithm)
+3. [Using *n*-Gram Statistics as a Heuristic Function](#Using-n-Gram-Statistics-as-a-Heuristic-Function)
+4. [References](#References)
+
+## The Playfair Cipher
 
 The [Playfair cipher](https://en.wikipedia.org/wiki/Playfair_cipher) or Playfair square or Wheatstone-Playfair cipher is a manual symmetric encryption technique and was
 the first literal digram substitution cipher. The scheme was invented in 1854 by Charles Wheatstone, but bears the name
@@ -170,7 +176,7 @@ Surprisingly, [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) offers good d
 different techniques discussed throughout this project and can be valuable to beginners looking to get an insight into
 these fields.
 
-Other References include:
+Other helpful resources include:
 
 1. [Cryptanalysis of the Playfair Cipher](http://practicalcryptography.com/cryptanalysis/stochastic-searching/cryptanalysis-playfair/)
 2. [Quadgram Statistics as a Fitness Measure](http://practicalcryptography.com/cryptanalysis/text-characterisation/quadgrams/)
