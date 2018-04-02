@@ -18,12 +18,12 @@ answer will be the correct plain-text, but can give a good approximation that ma
 right answer.
 
 ### Contents
-1. [The Playfair Cipher](#The-Playfair-Cipher)
-2. [The Simulated Annealing Algorithm](#The-Simulated-Annealing-Algorithm)
-3. [Using *n*-Gram Statistics as a Heuristic Function](#Using-n-Gram-Statistics-as-a-Heuristic-Function)
-4. [References](#References)
+1. [The Playfair Cipher](#playfair-cipher)
+2. [The Simulated Annealing Algorithm](#simulated-annealing)
+3. [Using *n*-Gram Statistics as a Heuristic Function](#ngram-stats)
+4. [References](#references)
 
-## The Playfair Cipher
+## The Playfair Cipher <a name="playfair-cipher"></a>
 
 The [Playfair cipher](https://en.wikipedia.org/wiki/Playfair_cipher) or Playfair square or Wheatstone-Playfair cipher is a manual symmetric encryption technique and was
 the first literal digram substitution cipher. The scheme was invented in 1854 by Charles Wheatstone, but bears the name
@@ -71,7 +71,7 @@ not make sense in the final message when finished).
 
 NOTE: There are several minor variations of the original Playfair Cipher.
 
-## The Simulated Annealing Algorithm
+## The Simulated Annealing Algorithm <a name="simulated-annealing"></a>
 
 [Simulated annealing (SA)](https://en.wikipedia.org/wiki/Simulated_annealing) is an excellent approach for breaking a cipher using a randomly
 generated key. Unlike conventional Hill Climbing algorithms, that are easily side-tracked by
@@ -116,7 +116,7 @@ frequency given (you can approximate this using `Math.random() * 100`):
 - Flip all columns (2%)
 - Reverse the whole key (2%)
 
-## Using *n*-Gram Statistics as a Heuristic Function
+## Using *n*-Gram Statistics as a Heuristic Function <a name="ngram-stats"></a>
 An n-gram (gram = word or letter) is a substring of a word(s) of length n and can be used to
 measure how similar some decrypted text is to English. For example, the quadgrams (4-grams)
 of the word "HAPPYDAYS" are "HAPP", "APPY", "PPYD", "PYDA", "YDAY" and
@@ -170,7 +170,7 @@ The final score, **_h(n)_**, for "HAPPYDAYS" is just the sum of the log probabil
 3.822746584 = **-29.36478172**. A decrypted message with a larger score than this is more
 "English" than this text and therefore must have been decrypted with a “better” key.
 
-## References
+## References <a name="references"></a>
 
 Surprisingly, [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) offers good descriptions of many of the
 different techniques discussed throughout this project and can be valuable to beginners looking to get an insight into
