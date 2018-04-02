@@ -3,8 +3,6 @@ package ie.gmit.sw.ai.ui;
 import java.io.IOException;
 import java.util.Scanner;
 
-import ie.gmit.sw.ai.cipher.PlayfairCipher;
-
 public class UserInterface {
 	private boolean running;
 	private Scanner sc;
@@ -55,12 +53,11 @@ public class UserInterface {
 					cipherBreaker.listDocuments();
 					break;
 				case 2:
-					getTextDocument();
+					setTextDocument();
 					int temp = getTemperature();
 					boolean debug = getDebug();
-					PlayfairCipher cipher = new PlayfairCipher(cipherBreaker.getDocument().getText());
 					
-					cipherBreaker.solve(cipher, temp, debug);
+					cipherBreaker.breakCipher(cipherBreaker.getCipher(), temp, debug);
 					break;
 				case 3:
 					submenu = false;
@@ -69,13 +66,13 @@ public class UserInterface {
 		} while(submenu);
 	}
 	
-	private void getTextDocument() {
+	private void setTextDocument() {
 		try {
 			cipherBreaker.setDocument(promptUserText("Please enter <filename.txt>: "));
 		} catch (IOException e) {
 			System.out.println("\nError Parsing TextDocument: ");
 			System.out.println("Please ensure the file you have specified exists");
-			getTextDocument();
+			setTextDocument();
 		}
 	}
 	

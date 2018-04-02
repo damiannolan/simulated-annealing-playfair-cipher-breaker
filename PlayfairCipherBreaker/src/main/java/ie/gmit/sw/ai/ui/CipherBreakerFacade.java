@@ -5,12 +5,12 @@ import java.io.IOException;
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.documents.Document;
 import ie.gmit.sw.ai.documents.DocumentService;
-import ie.gmit.sw.ai.documents.TextDocument;
 import ie.gmit.sw.ai.simulated_annealing.SAResult;
 import ie.gmit.sw.ai.simulated_annealing.SimulatedAnnealing;
 
 public class CipherBreakerFacade {
 	private DocumentService docService;
+	private PlayfairCipher cipher;
 	private SimulatedAnnealing simulatedAnnealing;
 	
 	private Document doc;
@@ -21,7 +21,10 @@ public class CipherBreakerFacade {
 	}
 	
 	public void listDocuments() {
-		System.out.println("=========Documents=========");
+		System.out.println("\n*NOTE:\tThe following documents include both encrypted ciphertext and deciphered output.");
+		System.out.println("\tDocuments listed as enc_*.txt are intended to be used for the demonstration of SA.");
+		System.out.println("\tIn contrast, Documents listed as plain_*.txt are intended for the demonstration of encryption.");
+		System.out.println("\n=========Documents=========");
 		this.docService.listDocuments();
 	}
 	
@@ -31,14 +34,23 @@ public class CipherBreakerFacade {
 	
 	public void setDocument(String filename) throws IOException {
 		this.doc = this.docService.createTextDocument(filename);
+		this.cipher = createCipher(doc);
 	}
 	
-	public PlayfairCipher createCipher(TextDocument doc) {
+	public PlayfairCipher getCipher() {
+		return this.cipher;
+	}
+	
+	public PlayfairCipher createCipher(Document doc) {
 		return new PlayfairCipher(doc.getText());
 	}
 	
-	public void solve(PlayfairCipher cipher, int temperature, boolean debug) {
+	public void breakCipher(PlayfairCipher cipher, int temperature, boolean debug) {
+		System.out.println("==========...Solving...=========");
 		SAResult result = this.simulatedAnnealing.solve(cipher, temperature, debug);
-		System.out.println("Result: " + result.toString());
+		System.out.println("=============Result=============");
+		System.out.println(result.toString());
+		
+		//docService.writeToFile(result.getTextResult());
 	}
 }
