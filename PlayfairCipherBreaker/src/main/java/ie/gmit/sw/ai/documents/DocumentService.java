@@ -23,14 +23,8 @@ public class DocumentService {
 		docList.stream().forEach(i -> System.out.println(i));
 	}
 	
-	public TextDocument newTextDocument(String name) {
-		String text = "";
-		try {
-			text = parseTextFile(name);
-		} catch (IOException e) {
-			System.out.println("\nError Parsing TextDocument: " + name);
-			System.out.println("Please ensure the file you have specified exists in - " + this.path);
-		}
+	public TextDocument createTextDocument(String name) throws IOException {
+		String text = parseTextFile(name);
 		return new TextDocument(name, text);
 	}
 	

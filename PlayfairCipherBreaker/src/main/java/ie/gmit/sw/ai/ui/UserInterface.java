@@ -1,5 +1,6 @@
 package ie.gmit.sw.ai.ui;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
@@ -36,11 +37,11 @@ public class UserInterface {
 	}
 	
 	private void displayMainMenu() {
-		System.out.println("============~~~Cipherator~~~=============");
+		System.out.println("============~~~CipherBreaker~~~=============");
 		System.out.println("(1) Decrypt Playfair Cipher");
 		System.out.println("(2) Encrypt Playfair Cipher");
 		System.out.println("(3) Exit");
-		System.out.println("=========================================");
+		System.out.println("============================================");
 	}
 	
 	private void displaySubMenu1() {
@@ -54,10 +55,12 @@ public class UserInterface {
 					cipherBreaker.listDocuments();
 					break;
 				case 2:
-					cipherBreaker.setDocument(promptUserText("Please enter <filename.txt>: "));
+					getTextDocument();
+					int temp = getTemperature();
+					boolean debug = getDebug();
 					PlayfairCipher cipher = new PlayfairCipher(cipherBreaker.getDocument().getText());
-					temperatureNotice();
-					cipherBreaker.solve(cipher, promptUserOptionInt("Enter temperature: "));
+					
+					cipherBreaker.solve(cipher, temp, debug);
 					break;
 				case 3:
 					submenu = false;
@@ -66,10 +69,37 @@ public class UserInterface {
 		} while(submenu);
 	}
 	
-	private void temperatureNotice() {
+	private void getTextDocument() {
+		try {
+			cipherBreaker.setDocument(promptUserText("Please enter <filename.txt>: "));
+		} catch (IOException e) {
+			System.out.println("\nError Parsing TextDocument: ");
+			System.out.println("Please ensure the file you have specified exists");
+			getTextDocument();
+		}
+	}
+	
+	private int getTemperature() {
 		System.out.println("\n*NOTE: The starting temperature can have a major impact on the success of a Simulated Annealing Algorithm.");
 		System.out.println("For Example: \n\t0 - 500 characters : Temperature = 10");	
 		System.out.println("\t500 - 1000 characters : Temperature = 20");
+		
+		return promptUserOptionInt("Enter temperature: ");
+	}
+	
+	private boolean getDebug() {
+		System.out.println("\nProvide debugging stats while solving: ");
+		System.out.println("\t(1) Yes");
+		System.out.println("\t(2) No");
+		
+		switch(promptUserOptionInt("\nEnter option: ")) {
+			case 1:
+				return true;
+			case 2:
+				return false;
+			default:
+				return getDebug();
+		}
 	}
 	
 	private int promptUserOptionInt(String message) {

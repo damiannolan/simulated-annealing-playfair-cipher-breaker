@@ -1,9 +1,12 @@
 package ie.gmit.sw.ai.ui;
 
+import java.io.IOException;
+
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
 import ie.gmit.sw.ai.documents.Document;
 import ie.gmit.sw.ai.documents.DocumentService;
 import ie.gmit.sw.ai.documents.TextDocument;
+import ie.gmit.sw.ai.simulated_annealing.SAResult;
 import ie.gmit.sw.ai.simulated_annealing.SimulatedAnnealing;
 
 public class CipherBreakerFacade {
@@ -18,6 +21,7 @@ public class CipherBreakerFacade {
 	}
 	
 	public void listDocuments() {
+		System.out.println("=========Documents=========");
 		this.docService.listDocuments();
 	}
 	
@@ -25,15 +29,16 @@ public class CipherBreakerFacade {
 		return this.doc;
 	}
 	
-	public void setDocument(String filename) {
-		this.doc = this.docService.newTextDocument(filename);
+	public void setDocument(String filename) throws IOException {
+		this.doc = this.docService.createTextDocument(filename);
 	}
 	
 	public PlayfairCipher createCipher(TextDocument doc) {
 		return new PlayfairCipher(doc.getText());
 	}
 	
-	public void solve(PlayfairCipher cipher, int temperature) {
-		this.simulatedAnnealing.solve(cipher, temperature);
+	public void solve(PlayfairCipher cipher, int temperature, boolean debug) {
+		SAResult result = this.simulatedAnnealing.solve(cipher, temperature, debug);
+		System.out.println("Result: " + result.toString());
 	}
 }

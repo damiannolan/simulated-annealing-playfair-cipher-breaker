@@ -16,13 +16,15 @@ public class SimulatedAnnealing {
 		this.rand = new SecureRandom();
 	}
 	
-	public void solve(PlayfairCipher cipher, int temperature) {
+	public SAResult solve(PlayfairCipher cipher, int temperature, boolean debug) {
 		String parentKey = cipher.getKey();
+		String bestKey = parentKey;
 		String decipheredText = cipher.decrypt(parentKey);
-
+		String bestText = decipheredText;
 		double parentScore = fitness.logProbability(decipheredText);
 		double bestScore = parentScore;
-
+		
+		
 		for (int temp = temperature; temp > 0; temp--) {
 			for (int trans = 50000; trans > 0; trans--) {
 				String childKey = KeyShuffler.shuffleKey(parentKey);
@@ -44,20 +46,34 @@ public class SimulatedAnnealing {
 
 				if (parentScore > bestScore) {
 					bestScore = parentScore;
-					String bestKey = parentKey;
-					displayStats(bestKey, bestScore, decipheredText, temp, trans);
+					bestKey = parentKey;
+					bestText = decipheredText;
+					
+					if(debug == true) {
+						debugStats(bestKey, bestScore, bestText, temp, trans);
+					}
 				}
 			} // end transitions
 
+			/*	
+			 * 	This piece of code is used to prevent redundant iterations of our simulated annealing loop  
+			 * 	
+			 *	After a transitions cycle check if the parentScore is equal to the bestScore
+			 * 	If they are still equal there is a good chance we are not making any improvements
+			 * 	This will break the loop and return
+			 * 
+			 * 	However there a small chance this path may execute before we reach our desired output
+			*/
 			if (parentScore == bestScore) {
 				break;
 			}
 		} // end temperature
+		return new SAResult(bestKey, bestText, bestScore);
 	}
 
-	public void displayStats(String bestKey, double bestScore, String decipheredText, int temp, int trans) {
+	public void debugStats(String bestKey, double bestScore, String bestText, int temp, int trans) {
 		System.out.printf("\nBest Key: %s With Score: %.5f\n", bestKey, bestScore);
-		System.out.println("Decrypted Message: " + decipheredText);
-		System.out.printf("With Temperature: %d and Transitions: %d\n", temp, trans);
+		System.out.printf("Decrypted Message: %s\n", bestText);
+		System.out.printf("At Temperature: %d and Transitions: %d\n", temp, trans);
 	}
 }
