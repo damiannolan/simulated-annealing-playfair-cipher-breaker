@@ -166,6 +166,14 @@ The final score, **_h(n)_**, for "HAPPYDAYS" is just the sum of the log probabil
 
 ## References
 
+Surprisingly, [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) offers good descriptions of many of the
+different techniques discussed throughout this project and can be valuable to beginners looking to get an insight into
+these fields.
+
+Other References include:
+
 1. [Cryptanalysis of the Playfair Cipher](http://practicalcryptography.com/cryptanalysis/stochastic-searching/cryptanalysis-playfair/)
 2. [Quadgram Statistics as a Fitness Measure](http://practicalcryptography.com/cryptanalysis/text-characterisation/quadgrams/)
+3. [The Playfair Cipher](http://practicalcryptography.com/ciphers/classical-era/playfair/)
+4. [The Simulated Annealing Algorithm](http://katrinaeg.com/simulated-annealing.html)
 
