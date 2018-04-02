@@ -18,5 +18,5 @@ public class TextDocument implements Document {
 	public String getName() {
 		return this.name;
 	}
-
+	
 }

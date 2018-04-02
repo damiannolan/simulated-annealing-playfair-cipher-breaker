@@ -28,7 +28,7 @@ public class DocumentService {
 		try {
 			text = parseTextFile(name);
 		} catch (IOException e) {
-			System.out.println("Error Parsing TextDocument: " + name);
+			System.out.println("\nError Parsing TextDocument: " + name);
 			System.out.println("Please ensure the file you have specified exists in - " + this.path);
 		}
 		return new TextDocument(name, text);

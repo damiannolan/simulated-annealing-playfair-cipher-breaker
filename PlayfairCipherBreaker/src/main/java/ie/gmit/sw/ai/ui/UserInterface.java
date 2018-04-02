@@ -3,20 +3,15 @@ package ie.gmit.sw.ai.ui;
 import java.util.Scanner;
 
 import ie.gmit.sw.ai.cipher.PlayfairCipher;
-import ie.gmit.sw.ai.documents.DocumentService;
-import ie.gmit.sw.ai.documents.TextDocument;
-import ie.gmit.sw.ai.simulated_annealing.SimulatedAnnealing;
 
 public class UserInterface {
 	private boolean running;
 	private Scanner sc;
-	private DocumentService docService;
-	private SimulatedAnnealing simulatedAnnealing;
-	
+	private CipherBreakerFacade cipherBreaker;
+		
 	public UserInterface() { 
 		this.sc = new Scanner(System.in);
-		this.docService = new DocumentService("./resources");
-		this.simulatedAnnealing = new SimulatedAnnealing();
+		this.cipherBreaker = new CipherBreakerFacade();
 	}
 	
 	public void start() {
@@ -46,30 +41,35 @@ public class UserInterface {
 		System.out.println("(2) Encrypt Playfair Cipher");
 		System.out.println("(3) Exit");
 		System.out.println("=========================================");
-
 	}
 	
 	private void displaySubMenu1() {
 		boolean submenu = true;
 		do {
-			System.out.println("\n(1) List files");
-			System.out.println("(2) Enter <filename.txt>");
+			System.out.println("\n(1) List Cipher Text Resources");
+			System.out.println("(2) Decrypt Cipher Text");
 			System.out.println("(3) Back");
 			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
-					docService.listDocuments();
+					cipherBreaker.listDocuments();
 					break;
 				case 2:
-					TextDocument doc = docService.newTextDocument(promptUserText("Please provide <filename.txt>: "));
-					PlayfairCipher cipher = new PlayfairCipher(doc.getText());
-					simulatedAnnealing.solve(cipher, promptUserOptionInt("Enter temperature: "));
+					cipherBreaker.setDocument(promptUserText("Please enter <filename.txt>: "));
+					PlayfairCipher cipher = new PlayfairCipher(cipherBreaker.getDocument().getText());
+					temperatureNotice();
+					cipherBreaker.solve(cipher, promptUserOptionInt("Enter temperature: "));
 					break;
 				case 3:
 					submenu = false;
 					break;
 			}
 		} while(submenu);
-		
+	}
+	
+	private void temperatureNotice() {
+		System.out.println("\n*NOTE: The starting temperature can have a major impact on the success of a Simulated Annealing Algorithm.");
+		System.out.println("For Example: \n\t0 - 500 characters : Temperature = 10");	
+		System.out.println("\t500 - 1000 characters : Temperature = 20");
 	}
 	
 	private int promptUserOptionInt(String message) {
