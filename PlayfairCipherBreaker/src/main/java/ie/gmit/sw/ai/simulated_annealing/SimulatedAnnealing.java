@@ -24,7 +24,6 @@ public class SimulatedAnnealing {
 		double parentScore = fitness.logProbability(decipheredText);
 		double bestScore = parentScore;
 		
-		
 		for (int temp = temperature; temp > 0; temp--) {
 			for (int trans = 50000; trans > 0; trans--) {
 				String childKey = KeyShuffler.shuffleKey(parentKey);
