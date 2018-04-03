@@ -35,28 +35,44 @@ public class UserInterface {
 	}
 	
 	private void displayMainMenu() {
-		System.out.println("============~~~CipherBreaker~~~=============");
+		System.out.println("=============~~~CipherBreaker~~~=============");
 		System.out.println("(1) Decrypt Playfair Cipher");
 		System.out.println("(2) Encrypt Playfair Cipher");
 		System.out.println("(3) Exit");
-		System.out.println("============================================");
+		System.out.println("=============================================");
+	}
+	
+	private void displayDecryptionMenu() {
+		System.out.println("\n=======Simualated-Annealing-Decryption=======");
+		System.out.println("(1) List Resources");
+		System.out.println("(2) Decrypt Cipher Text");
+		System.out.println("(3) Back");
+		System.out.println("=============================================");
+	}
+	
+	private void displayEncryptionMenu() {
+		System.out.println("\n==========Playfair-Cipher-Encryption=========");
+		System.out.println("(1) List Resources");
+		System.out.println("(2) Encrypt Plain Text");
+		System.out.println("(3) Back");
+		System.out.println("=============================================");
 	}
 	
 	private void decryptionMenu() {
 		boolean submenu = true;
 		do {
-			System.out.println("\n(1) List Resources");
-			System.out.println("(2) Decrypt Cipher Text");
-			System.out.println("(3) Back");
+			displayDecryptionMenu();
 			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
-					cipherBreaker.listDocuments();
+					System.out.println("\n==================Documents==================");
+					cipherBreaker.listDocuments("/encrypted");
+					System.out.println("=============================================");
 					break;
 				case 2:
-					setTextDocument();
+					setTextDocument("/encrypted");
 					int temp = getTemperature();
 					boolean debug = getDebug();
-					
+					System.out.println("Solving...");
 					cipherBreaker.breakCipher(temp, debug);
 					break;
 				case 3:
@@ -68,35 +84,32 @@ public class UserInterface {
 	
 	private void encryptionMenu() {
 		boolean submenu = true;
-		
 		do {
-			System.out.println("\n(1) List Resources");
-			System.out.println("(2) Encrypt Plain Text");
-			System.out.println("(3) Back");
-			
+			displayEncryptionMenu();
 			switch(promptUserOptionInt("\nEnter option: ")) {
 				case 1:
-					cipherBreaker.listDocuments();
+					System.out.println("\n==================Documents==================");
+					cipherBreaker.listDocuments("/plaintext");
+					System.out.println("=============================================");
 					break;
 				case 2:
-					setTextDocument();					
+					setTextDocument("/plaintext");					
 					String secret = promptUserText("Please enter a key secret using chars[A-Z]: ");					
 					cipherBreaker.encrypt(secret);					
 				case 3:
 					submenu = false;
 					break;
-				
 			}
 		} while(submenu);	
 	}
 	
-	private void setTextDocument() {
+	private void setTextDocument(String path) {
 		try {
-			cipherBreaker.setDocument(promptUserText("Please enter <filename.txt>: "));
+			cipherBreaker.setDocument(path, promptUserText("Please enter <filename.txt>: "));
 		} catch (IOException e) {
 			System.out.println("\nError Parsing TextDocument: ");
 			System.out.println("Please ensure the file you have specified exists");
-			setTextDocument();
+			setTextDocument(path);
 		}
 	}
 	

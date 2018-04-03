@@ -34,12 +34,15 @@ public class PlayfairCipher extends AbstractCipher {
 		return key == null ? this.key = this.keygen.generateKey() : key;
 	}
 	
+	/*
+	 * Inline comments show the result below
+	 * For example - take the digram GC with the matrix key
+	 * - SECRTKYABDFGHILMNOPQUVWXZ
+	 */
 	public String decrypt(String key) {
 		StringBuilder plainText = new StringBuilder();
 
 		for (String ngram : this.digrams) {
-			// For example - take the digram GC with the matrix key
-			// SECRTKYABDFGHILMNOPQUVWXZ
 			int row1 = key.indexOf(ngram.charAt(0)) / 5; // G - 11 / 5 = row 2
 			int col1 = key.indexOf(ngram.charAt(0)) % 5; // G - 11 % 2 = column 1
 			int row2 = key.indexOf(ngram.charAt(1)) / 5; // C - 2 / 5 = row 0
@@ -65,12 +68,15 @@ public class PlayfairCipher extends AbstractCipher {
 		return plainText.toString();
 	}
 
+	/*
+	 * Inline comments show the result below
+	 * For example - take the digram HE with the matrix key
+	 * - SECRTKYABDFGHILMNOPQUVWXZ
+	 */
 	public String encrypt(String key) {
 		StringBuilder cipherText = new StringBuilder();
 
 		for (String ngram : this.digrams) {
-			// For example - take the digram HE with the matrix key
-			// SECRTKYABDFGHILMNOPQUVWXZ
 			int row1 = key.indexOf(ngram.charAt(0)) / 5; // H - 12 / 5 = 2
 			int col1 = key.indexOf(ngram.charAt(0)) % 5; // H - 12 % 5 = 2
 			int row2 = key.indexOf(ngram.charAt(1)) / 5; // E - 1 / 5 = 0
