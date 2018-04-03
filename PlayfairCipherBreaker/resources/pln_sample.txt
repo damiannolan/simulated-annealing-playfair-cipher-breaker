@@ -1,0 +1,5 @@
+The field of cryptanalysis is concerned with the study of ciphers, having as its objective the
+identification of weaknesses within a cryptographic system that may be exploited to convert
+encrypted data (cipher-text) into unencrypted data (plain-text). Whether using symmetric or
+asymmetric techniques, cryptanalysis assumes no knowledge of the correct cryptographic key
+or even the cryptographic algorithm being used.

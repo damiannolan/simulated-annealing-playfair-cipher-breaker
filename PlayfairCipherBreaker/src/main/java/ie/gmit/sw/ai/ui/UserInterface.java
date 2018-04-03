@@ -57,7 +57,7 @@ public class UserInterface {
 					int temp = getTemperature();
 					boolean debug = getDebug();
 					
-					cipherBreaker.breakCipher(cipherBreaker.getCipher(), temp, debug);
+					cipherBreaker.breakCipher(temp, debug);
 					break;
 				case 3:
 					submenu = false;
@@ -79,9 +79,9 @@ public class UserInterface {
 					cipherBreaker.listDocuments();
 					break;
 				case 2:
-					System.out.println("=========Create Key=========");
-					String secret = promptUserText("Please enter a key secret using chars[A-Z]: ");
-					
+					setTextDocument();					
+					String secret = promptUserText("Please enter a key secret using chars[A-Z]: ");					
+					cipherBreaker.encrypt(secret);					
 				case 3:
 					submenu = false;
 					break;

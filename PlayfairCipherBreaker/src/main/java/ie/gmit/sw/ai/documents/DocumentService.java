@@ -34,7 +34,8 @@ public class DocumentService {
 	
 	public void writeToFile(String name, String text) {
 		try {
-			Files.write(Paths.get("./output/dec_" + name), text.getBytes());
+			System.out.println("Writing to file...");
+			Files.write(Paths.get(path + "/" + name), text.getBytes());
 		} catch (IOException e) {
 			System.out.println("Error writing to file");
 		}
