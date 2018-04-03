@@ -22,7 +22,8 @@ right answer.
 2. [The Playfair Cipher](#playfair-cipher)
 3. [The Simulated Annealing Algorithm](#simulated-annealing)
 4. [Using *n*-Gram Statistics as a Heuristic Function](#ngram-stats)
-5. [References](#references)
+5. [Thoughts and Observations](#thoughts)
+6. [References](#references)
 
 <a name="getting-started"></a>
 ## Getting Started 
@@ -199,6 +200,28 @@ The final score, **_h(n)_**, for "HAPPYDAYS" is just the sum of the log probabil
 3.960779349 + -4.557751689 + -5.964871583 + -6.467676267 + -4.590956247 + -
 3.822746584 = **-29.36478172**. A decrypted message with a larger score than this is more
 "English" than this text and therefore must have been decrypted with a “better” key.
+
+<a name="thoughts"></a>
+## Thoughts and Observations
+
+- The use of the Java 8 Streams API makes for a cleaner and in my opinion much more readable code base.
+- Java 8 Streams API also offers a slight increase in speed of certain functions.
+- The speed of the simulated annealing algorithm is effected largely by the temperature used.
+- The effectiveness of the auto generated cipher key (parentKey) may have a massive impact on how quick the decryption
+  process takes.
+
+From my experimentation throughout development I've noticed that the application performs much better on pieces of text
+250 - 1000 characters in length (or somewhere around that mark). Included in the resources are three sample texts I have
+used throughout the project. These texts have been tested and run through the Simulated Annealing decryptor a number of
+times and I've come to find that not much more improvements can be made on their scores.
+
+The `logProbability()` scores are tabulated below as follows:
+
+| Text                  | Score       |
+| --------------------- | -----------:|
+| exam_tips.txt         | -3259.30602 |
+| sample.txt            | -1597.00717 |
+| thehobbit_excerpt.txt | -4923.32724 |
 
 <a name="references"></a>
 ## References
